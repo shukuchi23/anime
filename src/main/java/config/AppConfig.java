@@ -6,11 +6,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+@Configuration
 public class AppConfig {
   protected static FileInputStream fileInputStream;
   protected static Properties properties;
@@ -21,9 +23,8 @@ public class AppConfig {
       properties.load(fileInputStream);
     } catch (IOException e) {
       e.printStackTrace();
-    }
-    finally {
-      if (fileInputStream != null){
+    } finally {
+      if (fileInputStream != null) {
         try {
           fileInputStream.close();
         } catch (IOException e) {
@@ -32,8 +33,9 @@ public class AppConfig {
       }
     }
   }
-  public static WebDriver getDriver(String driverName){
-    switch (driverName){
+
+  public static WebDriver getDriver(String driverName) {
+    switch (driverName) {
       case "firefox":
         return new FirefoxDriver(new FirefoxOptions());
       case "opera_driver":
@@ -44,7 +46,8 @@ public class AppConfig {
             "\nДрайвер " + driverName + "не найден");
     }
   }
-  public static String getProperty(String key){
+
+  public static String getProperty(String key) {
     return properties.getProperty(key);
   }
 }

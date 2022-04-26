@@ -7,7 +7,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -43,9 +42,6 @@
             <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">
                <children>
                   <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="D:\need\code\animeGit\src\main\resources\img\jutsu.png" />
-                     </image>
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -93,9 +89,6 @@
             <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">
                <children>
                   <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="D:\need\code\animeGit\src\main\resources\img\animego.png" />
-                     </image>
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>

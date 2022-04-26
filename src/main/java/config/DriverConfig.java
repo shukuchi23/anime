@@ -6,11 +6,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+@Configuration
 public class DriverConfig {
   protected static FileInputStream fileInputStream;
   protected static Properties properties;
@@ -32,6 +34,8 @@ public class DriverConfig {
       }
     }
   }
+
+
   public static WebDriver getDriver(String driverName){
     switch (driverName){
       case "firefox":
