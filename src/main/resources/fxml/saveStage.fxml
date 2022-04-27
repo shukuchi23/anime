@@ -12,116 +12,130 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.anime.controller.ExplorerController">
-   <children>
-      <MenuBar maxHeight="-Infinity" pickOnBounds="false" prefHeight="19.0" prefWidth="998.0">
-        <menus>
-          <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem fx:id="addNewMenuItem" mnemonicParsing="false" onAction="#addNewSavePoint" text="Add new" />
-              <MenuItem fx:id="SaveAsMenuItem" mnemonicParsing="false" onAction="#ExportSavePointsInFile" text="Save As..." />
-                  <MenuItem fx:id="ImportMenuItem" mnemonicParsing="false" onAction="#loadSavePointsFromFile" text="Import" />
-                  <MenuItem fx:id="CloseMenuItem" mnemonicParsing="false" onAction="#closeApp" text="Close" />
-            </items>
-          </Menu>
-          <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit" />
-          <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem fx:id="AboutMenuItem" mnemonicParsing="false" onAction="#getInfoAboutApp" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <Group layoutX="10.0" layoutY="108.0" VBox.vgrow="ALWAYS">
-         <children>
-            <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">
-               <children>
-                  <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Separator orientation="VERTICAL" prefHeight="98.0" prefWidth="0.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Separator>
-                  <VBox prefHeight="74.0" prefWidth="593.0">
-                     <children>
-                        <Label contentDisplay="CENTER" graphicTextGap="0.0" text="Эта фарфоровая кукла влюбилась" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <Label graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" text="5 серия" wrapText="true">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="-4.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label graphicTextGap="0.0" layoutX="10.0" layoutY="31.0" text="12:00" wrapText="true">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="-3.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </Group>
-      <Separator prefWidth="200.0" />
-      <Group layoutX="10.0" layoutY="35.0">
-         <children>
-            <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">
-               <children>
-                  <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Separator orientation="VERTICAL" prefHeight="98.0" prefWidth="0.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Separator>
-                  <VBox prefHeight="74.0" prefWidth="593.0">
-                     <children>
-                        <Label contentDisplay="CENTER" graphicTextGap="0.0" text="Эта фарфоровая кукла влюбилась" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="116.0" text="5 серия" wrapText="true">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="-4.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label graphicTextGap="0.0" layoutX="10.0" layoutY="31.0" prefHeight="25.0" prefWidth="77.0" text="12:00" wrapText="true">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="-3.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </Group>
-      <Separator layoutX="10.0" layoutY="109.0" prefWidth="200.0" />
-   </children>
+<?import org.anime.fxcomponent.FxSavePoint?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0"
+      prefWidth="666.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.anime.controller.ExplorerController">
+    <children>
+        <MenuBar maxHeight="-Infinity" pickOnBounds="false" prefHeight="19.0" prefWidth="998.0">
+            <menus>
+                <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="addNewMenuItem" mnemonicParsing="false" onAction="#addNewSavePoint"
+                                  text="Add new"/>
+                        <MenuItem fx:id="SaveAsMenuItem" mnemonicParsing="false" onAction="#ExportSavePointsInFile"
+                                  text="Save As..."/>
+                        <MenuItem fx:id="ImportMenuItem" mnemonicParsing="false" onAction="#loadSavePointsFromFile"
+                                  text="Import"/>
+                        <MenuItem fx:id="CloseMenuItem" mnemonicParsing="false" onAction="#closeApp" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit"/>
+                <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem fx:id="AboutMenuItem" mnemonicParsing="false" onAction="#getInfoAboutApp"
+                                  text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+<!--        <Group layoutX="10.0" layoutY="108.0" VBox.vgrow="ALWAYS">-->
+<!--            <children>-->
+<!--                <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">-->
+<!--                    <children>-->
+<!--                        <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"-->
+<!--                                   HBox.hgrow="ALWAYS">-->
+<!--                            <HBox.margin>-->
+<!--                                <Insets top="5.0"/>-->
+<!--                            </HBox.margin>-->
+<!--                        </ImageView>-->
+<!--                        <Separator orientation="VERTICAL" prefHeight="98.0" prefWidth="0.0">-->
+<!--                            <opaqueInsets>-->
+<!--                                <Insets/>-->
+<!--                            </opaqueInsets>-->
+<!--                        </Separator>-->
+<!--                        <VBox prefHeight="74.0" prefWidth="593.0">-->
+<!--                            <children>-->
+<!--                                <Label contentDisplay="CENTER" graphicTextGap="0.0"-->
+<!--                                       text="Эта фарфоровая кукла влюбилась" wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="20.0"/>-->
+<!--                                    </font>-->
+<!--                                    <VBox.margin>-->
+<!--                                        <Insets/>-->
+<!--                                    </VBox.margin>-->
+<!--                                </Label>-->
+<!--                                <Label graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" text="5 серия"-->
+<!--                                       wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="17.0"/>-->
+<!--                                    </font>-->
+<!--                                    <VBox.margin>-->
+<!--                                        <Insets top="-4.0"/>-->
+<!--                                    </VBox.margin>-->
+<!--                                </Label>-->
+<!--                                <Label graphicTextGap="0.0" layoutX="10.0" layoutY="31.0" text="12:00" wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="16.0"/>-->
+<!--                                    </font>-->
+<!--                                    <VBox.margin>-->
+<!--                                        <Insets top="-3.0"/>-->
+<!--                                    </VBox.margin>-->
+<!--                                </Label>-->
+<!--                            </children>-->
+<!--                        </VBox>-->
+<!--                    </children>-->
+<!--                </HBox>-->
+<!--            </children>-->
+<!--        </Group>-->
+<!--        <Separator prefWidth="200.0"/>-->
+<!--        <Group layoutX="10.0" layoutY="35.0">-->
+<!--            <children>-->
+<!--                <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="661.0">-->
+<!--                    <children>-->
+<!--                        <ImageView fitHeight="69.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"-->
+<!--                                   HBox.hgrow="ALWAYS">-->
+<!--                            <HBox.margin>-->
+<!--                                <Insets top="5.0"/>-->
+<!--                            </HBox.margin>-->
+<!--                        </ImageView>-->
+<!--                        <Separator orientation="VERTICAL" prefHeight="98.0" prefWidth="0.0">-->
+<!--                            <opaqueInsets>-->
+<!--                                <Insets/>-->
+<!--                            </opaqueInsets>-->
+<!--                        </Separator>-->
+<!--                        <VBox prefHeight="74.0" prefWidth="593.0">-->
+<!--                            <children>-->
+<!--                                <Label contentDisplay="CENTER" graphicTextGap="0.0"-->
+<!--                                       text="Эта фарфоровая кукла влюбилась" wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="20.0"/>-->
+<!--                                    </font>-->
+<!--                                </Label>-->
+<!--                                <Label graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" prefHeight="26.0"-->
+<!--                                       prefWidth="116.0" text="5 серия" wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="17.0"/>-->
+<!--                                    </font>-->
+<!--                                    <VBox.margin>-->
+<!--                                        <Insets top="-4.0"/>-->
+<!--                                    </VBox.margin>-->
+<!--                                </Label>-->
+<!--                                <Label graphicTextGap="0.0" layoutX="10.0" layoutY="31.0" prefHeight="25.0"-->
+<!--                                       prefWidth="77.0" text="12:00" wrapText="true">-->
+<!--                                    <font>-->
+<!--                                        <Font size="16.0"/>-->
+<!--                                    </font>-->
+<!--                                    <VBox.margin>-->
+<!--                                        <Insets top="-3.0"/>-->
+<!--                                    </VBox.margin>-->
+<!--                                </Label>-->
+<!--                            </children>-->
+<!--                        </VBox>-->
+<!--                    </children>-->
+<!--                </HBox>-->
+<!--            </children>-->
+<!--        </Group>-->
+<!--        <Separator layoutX="10.0" layoutY="109.0" prefWidth="200.0"/>-->
+    </children>
 </VBox>

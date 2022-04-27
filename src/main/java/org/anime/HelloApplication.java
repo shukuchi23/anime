@@ -10,8 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.anime.fxcomponent.FxComponentFactory;
 import org.anime.fxcomponent.FxSavePoint;
 import org.anime.model.SavePoint;
+import org.anime.utils.IconProvider;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Lazy;
@@ -31,25 +33,32 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
   public void start(Stage stage) throws IOException {
     try (InputStream resourceAsStream = getClass().getResourceAsStream("/fxml/saveStage.fxml")) {
       FXMLLoader fxmlLoader = new FXMLLoader();
-//      Pane panel = (Pane) fxmlLoader.load(resourceAsStream);
-//      fxmlLoader.setLocation(url);
-
-//    InputStream inputStream = HelloApplication.class.getResource("/hello-view.fxml").openStream();
       VBox root = fxmlLoader.load(resourceAsStream);
-      SavePoint savePoint = new SavePoint(
+      // test_block
+      SavePoint narutoSavePoint = new SavePoint(
           "Naruto",
           10,
           LocalTime.of(0, 11, 11),
           "AniDub",
           "https://jut.su/naruto/episode-1.html"
       );
+      SavePoint bleachSavePoint = new SavePoint(
+          "Bleach",
+          228,
+          LocalTime.of(0, 14, 11),
+          "Subtitles",
+          "https://jut.su/naruto/episode-1.html"
+      );
 
-      root.getChildren().add(new FxSavePoint(
-          new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/jutsu.png")))),
-          savePoint));
-//      final ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/jutsu.png"))));
-//      Parent root = new VBox(imageView);
-//      new VBox()
+      final VBox naruto = FxComponentFactory.createSavePoint(
+          new ImageView(IconProvider.getImageByName("jutsu.png")),
+          bleachSavePoint);
+      final VBox bleach = FxComponentFactory.createSavePoint(
+          new ImageView(IconProvider.getImageByName("animego.png")),
+          bleachSavePoint);
+      root.getChildren().addAll(naruto, bleach);
+      // test_block_end
+
       Scene scene = new Scene(root);
       stage.setTitle("Hello!");
       stage.setScene(scene);

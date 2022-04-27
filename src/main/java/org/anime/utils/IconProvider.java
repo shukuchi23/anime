@@ -1,16 +1,16 @@
 package org.anime.utils;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import org.anime.HelloApplication;
 
-import javax.swing.*;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class IconProvider {
-    private static final String IMG_PATH_PREFIX = "src/main/resources/";
-    private static final Map<String, ImageView> icons = new HashMap<>();
+  public static Image getImageByName(String filename){
+    final InputStream resourceAsStream = HelloApplication.class.getResourceAsStream("/img/" + filename);
+    return new Image(Objects.requireNonNull(resourceAsStream));
+  }
 
 //    public static getIcon()
 }

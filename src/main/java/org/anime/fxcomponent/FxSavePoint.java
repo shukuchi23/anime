@@ -13,7 +13,7 @@ import org.anime.model.SavePoint;
  * @author Karimov Evgeniy
  * 25.04.2022
  */
-public class FxSavePoint extends HBox implements Cloneable{
+public class FxSavePoint extends HBox{
   private ImageView titleIcon;
   private SavePoint savePoint;
 
@@ -23,7 +23,7 @@ public class FxSavePoint extends HBox implements Cloneable{
     final Separator separator = new Separator(Orientation.VERTICAL);
     final Label titleName = new Label(savePoint.getTitleName() + " (" + savePoint.getDubName() + ")");
     final Label seriesNum = new Label(savePoint.getSeriesNum() + " серия");
-    final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
+//    final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
     getChildren().addAll(titleIcon, separator, new VBox(titleName, seriesNum));
     setOnMouseClicked(e -> {
       switch (e.getButton()){
@@ -37,14 +37,19 @@ public class FxSavePoint extends HBox implements Cloneable{
     });
   }
 
-  @Override
-  public FxSavePoint clone() {
-    try {
-      FxSavePoint clone = (FxSavePoint) super.clone();
-      // TODO: copy mutable state here, so the clone can't change the internals of the original
-      return clone;
-    } catch (CloneNotSupportedException e) {
-      throw new AssertionError();
-    }
+  public ImageView getTitleIcon() {
+    return titleIcon;
+  }
+
+  public void setTitleIcon(ImageView titleIcon) {
+    this.titleIcon = titleIcon;
+  }
+
+  public SavePoint getSavePoint() {
+    return savePoint;
+  }
+
+  public void setSavePoint(SavePoint savePoint) {
+    this.savePoint = savePoint;
   }
 }
