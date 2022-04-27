@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.Clock;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class DBtest {
         "test_dub",
         "https://jut.su/oresuki/episode-1.html"
     );
+    
     final SavePoint test1 = new SavePoint(
         "test1",
         1,

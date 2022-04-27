@@ -7,8 +7,6 @@ import java.util.List;
 public class AnimeService {
   private AbstractAnimeClient driver;
 
-
-
   public AnimeService(AbstractAnimeClient driver){
     this.driver = driver;
   }

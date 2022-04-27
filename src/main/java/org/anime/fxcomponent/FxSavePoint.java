@@ -4,7 +4,9 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.anime.model.SavePoint;
 
 /**
@@ -15,21 +17,28 @@ public class FxSavePoint extends HBox implements Cloneable{
   private ImageView titleIcon;
   private Separator separator;
 //  private TextArea titleInfo;
-  private Label titleName;
-  private Label seriesNum;
-  private Label seriesDuration;
-  private Label dubName;
-  private Label updateTime;
-  private String sourceURI; // https://jut.su/
+  private SavePoint savePoint;
+//  private Label titleName;
+//  private Label seriesNum;
 
   public FxSavePoint(ImageView titleIcon, SavePoint savePoint) {
     this.titleIcon = titleIcon;
+    this.savePoint = savePoint;
     separator = new Separator(Orientation.VERTICAL);
-    titleName = new Label(savePoint.getTitleName());
-    seriesNum = new Label(savePoint.getSeriesNum() + " серия");
-    seriesDuration = new Label(savePoint.getSeriesDuration().toString());
-    dubName = new Label();
-    getChildren().addAll(titleName, separator);
+    final Label titleName = new Label(savePoint.getTitleName() + " (" + savePoint.getDubName() + ")");
+    final Label seriesNum = new Label(savePoint.getSeriesNum() + " серия");
+    final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
+    getChildren().addAll(titleIcon, separator, new VBox(titleName, seriesNum));
+    setOnMouseClicked(e -> {
+      switch (e.getButton()){
+        case PRIMARY:
+          System.out.println("Clicked Left");
+          break;
+        case SECONDARY:
+          System.out.println("Clicked Right");
+          break;
+      }
+    });
   }
 
   @Override
