@@ -1,7 +1,6 @@
-import config.H2Config;
-import repository.SavePointRepositoryImpl;
-import exception.NotFoundException;
-import model.SavePoint;
+import org.anime.repository.SavePointRepositoryImpl;
+import org.anime.exception.NotFoundException;
+import org.anime.model.SavePoint;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;

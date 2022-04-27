@@ -1,13 +1,10 @@
-import config.DriverConfig;
+import org.anime.config.DriverConfig;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import service.AbstractAnimeClient;
-import service.AnimeService;
+import org.anime.service.AnimeService;
 
 public class AnimeTest {
   private AnimeService service;
