@@ -21,18 +21,24 @@ public class H2Config {
     JdbcDataSource ds = new JdbcDataSource();
     ds.setURL("jdbc:h2:file:~/h2_db");
     return ds;
-//    return DataSourceBuilder.create()
-//        .driverClassName("org.h2.Driver")
-//        .url("jdbc:h2:file:~/h2_db")
-//        .username("")
-//        .password("")
-//        .build();
+  }
+  @Bean
+  public DataSource testDataSource() {
+    JdbcDataSource ds = new JdbcDataSource();
+    ds.setURL("jdbc:h2:tcp://localhost/~/test_db;DB_CLOSE_DELAY=-1");
+    return ds;
   }
 
   @Bean
   @Autowired
   public JdbcTemplate jdbcTemplate(DataSource dataSource) {
     return new JdbcTemplate(dataSource);
+  }
+
+  @Bean
+  @Autowired
+  public JdbcTemplate testJdbcTemplate(DataSource testDataSource) {
+    return new JdbcTemplate(testDataSource);
   }
 
   protected static FileInputStream fileInputStream;

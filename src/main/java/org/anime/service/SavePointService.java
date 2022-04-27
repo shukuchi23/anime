@@ -22,12 +22,9 @@ public class SavePointService {
   }
 
   public List<SavePoint> findAll() throws NoSuchElementException {
-    return findAll("DESC"); // по убыванию
+    return dao.findAll(); // по убыванию
   }
 
-  public List<SavePoint> findAll(String order) throws NoSuchElementException {
-    return dao.findAll(order);
-  }
 
   // TODO: remove, и другую парашу
 }

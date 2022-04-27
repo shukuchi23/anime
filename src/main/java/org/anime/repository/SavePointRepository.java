@@ -14,7 +14,8 @@ import java.util.Optional;
  * 26.04.2022
  */
 public interface SavePointRepository {
-  RowMapper<SavePoint> ROW_MAPPER = (ResultSet rs, int rowNum) -> new SavePoint(
+
+  RowMapper<SavePoint> ROW_MAPPER = (ResultSet rs, int rowNum) -> {return new SavePoint(
       rs.getString("title_name"),
       rs.getInt("series_num"),
       TypeUtils.localTimeFromString(rs.getString("series_duration")),
@@ -22,15 +23,16 @@ public interface SavePointRepository {
       rs.getDate("update_time"),
       rs.getString("source_uri")
   );
+  };
 
   void insert(SavePoint obj);
 
   List<SavePoint> findAll() throws NotFoundException;
-  List<SavePoint> findAll(String order) throws NotFoundException;
 
   Optional<SavePoint> findOne(String titleName) throws NotFoundException;
 
   boolean remove(String titleName);
+  boolean removeAll();
 
   void update(SavePoint nextValue) throws NotFoundException;
 }
