@@ -13,16 +13,16 @@ import java.util.NoSuchElementException;
  * 26.04.2022
  */
 @Component
-public class SavePointService {
-  private final SavePointRepositoryImpl dao;
+public class FxSavePointService {
+  private final SavePointRepositoryImpl repository;
 
   @Autowired
-  public SavePointService(SavePointRepositoryImpl dao) {
-    this.dao = dao;
+  public FxSavePointService(SavePointRepositoryImpl dao) {
+    this.repository = dao;
   }
 
   public List<SavePoint> findAll() throws NoSuchElementException {
-    return dao.findAll(); // по убыванию
+    return repository.findAll(); // по убыванию
   }
 
 
