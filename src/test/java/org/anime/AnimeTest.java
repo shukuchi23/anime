@@ -4,11 +4,17 @@ import org.anime.config.DriverConfig;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.anime.service.AnimeService;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class AnimeTest {
+
   private AnimeService service;
 //  private WebDriver driver;
 
@@ -17,11 +23,11 @@ public class AnimeTest {
     WebDriver yandex_driver = DriverConfig.getDriver("yandex_driver");
   }
 
-  @Test()
+  @Test
   public void testAllDrivers() {
-//    Assert.assertNotNull(DriverConfig.getDriver("firefox_driver"));
-    Assert.assertNotNull(DriverConfig.getDriver("chrome"));
-    Assert.assertNotNull(DriverConfig.getDriver("opera"));
+    Assert.assertNotNull(DriverConfig.getDriver("firefox"));
+//    Assert.assertNotNull(DriverConfig.getDriver("chrome"));
+//    Assert.assertNotNull(DriverConfig.getDriver("opera"));
   }
 
   @Test

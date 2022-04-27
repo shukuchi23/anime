@@ -26,14 +26,14 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
   // --module-path "/opt/jdk/openjfx-11.0.2_linux-x64_bin-sdk/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml
   @Override
   public void start(Stage stage) throws IOException {
-    try (InputStream resourceAsStream = getClass().getResourceAsStream("/fxml/hello-view.fxml")) {
+    try (InputStream resourceAsStream = getClass().getResourceAsStream("/fxml/saveStage.fxml")) {
       FXMLLoader fxmlLoader = new FXMLLoader();
 //      Pane panel = (Pane) fxmlLoader.load(resourceAsStream);
 //      fxmlLoader.setLocation(url);
 //    InputStream inputStream = HelloApplication.class.getResource("/hello-view.fxml").openStream();
-//      Parent root = fxmlLoader.load(resourceAsStream);
-      final ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/jutsu.png"))));
-      Parent root = new VBox(imageView);
+      Parent root = fxmlLoader.load(resourceAsStream);
+//      final ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/jutsu.png"))));
+//      Parent root = new VBox(imageView);
 //      new VBox()
       Scene scene = new Scene(root);
       stage.setTitle("Hello!");
