@@ -15,16 +15,12 @@ import org.anime.model.SavePoint;
  */
 public class FxSavePoint extends HBox implements Cloneable{
   private ImageView titleIcon;
-  private Separator separator;
-//  private TextArea titleInfo;
   private SavePoint savePoint;
-//  private Label titleName;
-//  private Label seriesNum;
 
   public FxSavePoint(ImageView titleIcon, SavePoint savePoint) {
     this.titleIcon = titleIcon;
     this.savePoint = savePoint;
-    separator = new Separator(Orientation.VERTICAL);
+    final Separator separator = new Separator(Orientation.VERTICAL);
     final Label titleName = new Label(savePoint.getTitleName() + " (" + savePoint.getDubName() + ")");
     final Label seriesNum = new Label(savePoint.getSeriesNum() + " серия");
     final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
