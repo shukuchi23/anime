@@ -22,7 +22,8 @@ import java.util.Objects;
 @SpringBootApplication
 @ConfigurationPropertiesScan(basePackageClasses = {AppConfig.class, DriverConfig.class, H2Config.class})
 public class HelloApplication extends AbstractJavaFxApplicationSupport {
-
+  // VM option
+  // --module-path "/opt/jdk/openjfx-11.0.2_linux-x64_bin-sdk/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml
   @Override
   public void start(Stage stage) throws IOException {
     try (InputStream resourceAsStream = getClass().getResourceAsStream("org/anime/hello-view.fxml")) {
