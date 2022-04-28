@@ -14,6 +14,13 @@ import java.util.NoSuchElementException;
  */
 @Component
 public class FxSavePointService {
+  /* Класс предоставляющий функционал над объектами класса FxSavePoint.
+  * Примерный функционал:
+  * * найти все точки сохранения;
+  * * удалить заданную точку;
+  * *
+  * *
+  * */
   private final SavePointRepositoryImpl repository;
 
   @Autowired
