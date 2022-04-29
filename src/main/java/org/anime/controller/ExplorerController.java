@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
+import org.anime.fxcomponent.FxSavePoint;
+
+import java.util.List;
 
 public class ExplorerController {
 
@@ -29,7 +33,12 @@ public class ExplorerController {
   private Menu fileMenu;
 
   @FXML
+  private VBox explorerVBox;
+
+  @FXML
   private Menu helpMenu;
+
+  private List<FxSavePoint> savePoints;
 
   @FXML
   void ExportSavePointsInFile(ActionEvent event) {
@@ -51,8 +60,14 @@ public class ExplorerController {
 
   }
 
+
   @FXML
   void loadSavePointsFromFile(ActionEvent event) {
+    System.out.println("asd");
+//    event.getSource()
+  }
+
+  void playSavePoint(ActionEvent event){
 
   }
 }

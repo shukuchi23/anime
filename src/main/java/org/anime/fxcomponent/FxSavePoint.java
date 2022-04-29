@@ -1,6 +1,7 @@
 package org.anime.fxcomponent;
 
 import javafx.geometry.Orientation;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
@@ -26,12 +27,14 @@ public class FxSavePoint extends HBox{
 //    final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
     getChildren().addAll(titleIcon, separator, new VBox(titleName, seriesNum));
     setOnMouseClicked(e -> {
+
       switch (e.getButton()){
         case PRIMARY:
-          System.out.println("Clicked Left");
+
+          System.out.printf("[%s] Clicked Left\n", savePoint.getTitleName());
           break;
         case SECONDARY:
-          System.out.println("Clicked Right");
+          System.out.printf("[%s] Clicked Right\n", savePoint.getTitleName());
           break;
       }
     });
