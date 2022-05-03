@@ -1,7 +1,7 @@
 package org.anime.repository;
 
 import org.anime.exception.NotFoundException;
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

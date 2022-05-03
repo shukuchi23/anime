@@ -1,6 +1,5 @@
 package org.anime;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -9,22 +8,33 @@ import org.anime.config.AppConfig;
 import org.anime.config.DriverConfig;
 import org.anime.config.H2Config;
 import org.anime.fxcomponent.FxComponentFactory;
-import org.anime.fxcomponent.FxStageFactory;
-import org.anime.model.SavePoint;
+import org.anime.fxcomponent.FxSavePoint;
+import org.anime.web.SavePoint;
+import org.anime.service.FxSavePointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Lazy;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalTime;
-import java.util.Scanner;
+import java.util.List;
 
 @Lazy
 @SpringBootApplication
 @ConfigurationPropertiesScan(basePackageClasses = {AppConfig.class, DriverConfig.class, H2Config.class})
 public class HelloApplication extends AbstractJavaFxApplicationSupport {
-  public static FxStageFactory stageFactory = new FxStageFactory();
+
+  @Autowired
+  private Scene explorerScene;
+  @Autowired
+  private Scene creatorScene;
+//
+//  @Autowired
+//  private ExplorerController controller;
+
+
   // VM option
   // --module-path "path_to_javaFx/lib" --add-modules javafx.controls,javafx.fxml
   @Override
@@ -34,23 +44,26 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 //    final Scene scene1 = new Scene(exploreStage);
 //
 //
+//    Stage explorer = stageFactory.getExplorer();
+//    stage.setScene(stageFactory.getSceneByFxmlName(FxStageFactory.FXML_EXPLORER_STAGE));
+//    stage.show();
+    VBox root = (VBox) explorerScene.getRoot();
+    long count = root.getChildren()
+            .stream()
+            .filter(n -> n instanceof FxSavePoint)
+            .count();
+    stage.setScene(count == 0 ? creatorScene : explorerScene);
+    stage.show();
 
-    try (InputStream resourceAsStream = getClass().getResourceAsStream("/fxml/saveStage.fxml")) {
-      FXMLLoader fxmlLoader = new FXMLLoader();
-      // загрузка окна на основе файла
-      //Vbox - см. https://metanit.com/java/javafx/3.4.php
-      VBox root = fxmlLoader.load(resourceAsStream);
-      // test_block
-      testInit(root);
-      // test_block_end
-      Scene scene = new Scene(root);
-      stage.setTitle("Hello!");
-      stage.setScene(scene);
-
-      stage.show();
-    }
   }
 
+  @Autowired
+  @PostConstruct
+  private void init(FxSavePointService service){
+    List<FxSavePoint> fxSavePoints = service.savePoints();
+    VBox root = (VBox) explorerScene.getRoot();
+    root.getChildren().addAll(fxSavePoints);
+  }
   public static void main(String[] args) {
     launchApp(HelloApplication.class, args);
   }
@@ -71,8 +84,8 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
         "https://jut.su/naruto/episode-1.html"
     );
 
-    final VBox naruto = FxComponentFactory.createSavePoint("jutsu.png", narutoSavePoint);
-    final VBox bleach = FxComponentFactory.createSavePoint("animego.png", bleachSavePoint);
+    final VBox naruto = FxComponentFactory.createSavePointVBox("jutsu.png", narutoSavePoint);
+    final VBox bleach = FxComponentFactory.createSavePointVBox("animego.png", bleachSavePoint);
     stage.getChildren().addAll(naruto, bleach);
   }
 }

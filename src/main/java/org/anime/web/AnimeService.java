@@ -1,4 +1,4 @@
-package org.anime.service;
+package org.anime.web;
 
 import org.openqa.selenium.WebElement;
 

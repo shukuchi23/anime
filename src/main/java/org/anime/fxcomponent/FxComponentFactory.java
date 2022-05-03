@@ -4,7 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 import org.anime.utils.IconProvider;
 
 /**
@@ -26,14 +26,20 @@ public class FxComponentFactory {
   // =======================================
   // * imageName - имя картинки, расположенной в папке проекта по пути resource/img
   // * savePoint - информация об сериале
-  public static VBox createSavePoint(String imageName, SavePoint savePoint){
+  public static VBox createSavePointVBox(String imageName, SavePoint savePoint){
+    FxSavePoint fxSavePoint = createFxSavePoint(imageName, savePoint);
+    return createSavePointVBox(fxSavePoint);
+  }
+
+  private static VBox createSavePointVBox(FxSavePoint fxSavePoint){
+    return new VBox(fxSavePoint, new Separator(Orientation.HORIZONTAL));
+  }
+
+  public static FxSavePoint createFxSavePoint(String imageName, SavePoint savePoint){
     final ImageView imageView = new ImageView(IconProvider.getImageByName(imageName));
     imageView.setFitHeight(DEFAULT_IMAGE_HEIGHT);
     imageView.setFitWidth(DEFAULT_IMAGE_WIDTH);
-    return createSavePoint(imageView, savePoint);
+    return new FxSavePoint(imageView, savePoint);
   }
 
-  private static VBox createSavePoint(ImageView icon, SavePoint savePoint){
-    return new VBox(new FxSavePoint(icon, savePoint), new Separator(Orientation.HORIZONTAL));
-  }
 }

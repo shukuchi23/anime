@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="H2 - test_db" uuid="1738c24e-a421-4702-a2bb-1200d0df48eb">
-      <driver-ref>h2.unified</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:mem:test_db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="H2" uuid="7f233d3f-25e8-4ef5-a188-8fc51e977df5">
+    <data-source source="LOCAL" name="H2" uuid="0c24c2fa-a04f-47b3-8c69-cdb3364e7841">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:tcp://localhost/~/test_db</jdbc-url>
+      <jdbc-url>jdbc:h2:tcp://localhost/~/h2_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
-      <auto-close enable="true" />
     </data-source>
   </component>
 </project>

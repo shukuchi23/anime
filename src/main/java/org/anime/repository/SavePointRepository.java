@@ -1,7 +1,7 @@
 package org.anime.repository;
 
 import org.anime.exception.NotFoundException;
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 import org.springframework.jdbc.core.RowMapper;
 import org.anime.utils.TypeUtils;
 

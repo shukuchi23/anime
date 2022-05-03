@@ -1,4 +1,4 @@
-package org.anime.service;
+package org.anime.web;
 
 import org.anime.config.DriverConfig;
 import org.openqa.selenium.NotFoundException;

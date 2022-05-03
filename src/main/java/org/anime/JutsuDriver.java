@@ -1,10 +1,10 @@
 package org.anime;
 
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.anime.service.AbstractAnimeClient;
+import org.anime.web.AbstractAnimeClient;
 
 import java.io.IOException;
 import java.util.List;

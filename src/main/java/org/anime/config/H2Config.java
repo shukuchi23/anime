@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
@@ -15,17 +17,24 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:./h2.properties")
 public class H2Config {
+
+  @Autowired
+  private Environment environment;
+
   @Bean
   public DataSource dataSource() {
     JdbcDataSource ds = new JdbcDataSource();
-    ds.setURL("jdbc:h2:file:~/h2_db");
+    ds.setURL(environment.getProperty("spring.datasource.history_db"));
+    ds.setUser("sa");
     return ds;
   }
   @Bean
   public DataSource testDataSource() {
     JdbcDataSource ds = new JdbcDataSource();
-    ds.setURL("jdbc:h2:tcp://localhost/~/test_db;DB_CLOSE_DELAY=-1");
+    ds.setURL(environment.getProperty("spring.datasource.test_db"));
+    ds.setUser("sa");
     return ds;
   }
 

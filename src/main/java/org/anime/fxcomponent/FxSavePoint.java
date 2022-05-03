@@ -1,14 +1,12 @@
 package org.anime.fxcomponent;
 
 import javafx.geometry.Orientation;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 
 /**
  * @author Karimov Evgeniy
@@ -30,7 +28,6 @@ public class FxSavePoint extends HBox{
 
       switch (e.getButton()){
         case PRIMARY:
-
           System.out.printf("[%s] Clicked Left\n", savePoint.getTitleName());
           break;
         case SECONDARY:

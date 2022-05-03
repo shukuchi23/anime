@@ -1,11 +1,5 @@
 package org.anime.config;
 
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -37,19 +31,6 @@ public class AppConfig {
           e.printStackTrace();
         }
       }
-    }
-  }
-
-  public static WebDriver getDriver(String driverName) {
-    switch (driverName) {
-      case "firefox":
-        return new FirefoxDriver(new FirefoxOptions());
-      case "opera_driver":
-      case "chrome_driver":
-        return new ChromeDriver(new ChromeOptions());
-      default:
-        throw new NotFoundException("На данный момент приложение поддерживает только firefox, opera, chrome." +
-            "\nДрайвер " + driverName + "не найден");
     }
   }
 

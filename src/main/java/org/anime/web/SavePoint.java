@@ -1,4 +1,4 @@
-package org.anime.model;
+package org.anime.web;
 
 import java.time.LocalTime;
 import java.util.Date;

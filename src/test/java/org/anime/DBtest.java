@@ -1,7 +1,7 @@
 package org.anime;
 
 import org.anime.exception.NotFoundException;
-import org.anime.model.SavePoint;
+import org.anime.web.SavePoint;
 import org.anime.repository.SavePointRepositoryImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.Clock;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class DBtest {
         1,
         LocalTime.of(0, 11, 11),
         "test_dub",
-        "https://jut.su/oresuki/episode-1.html"
+        "https://jut.su/saikou-no-ansatsusha/episode-1.html"
     );
     
     final SavePoint test1 = new SavePoint(
