@@ -1,7 +1,5 @@
 package org.anime.utils;
 
-import org.anime.config.H2Config;
-
 import java.sql.*;
 
 /**
@@ -18,7 +16,7 @@ public class AppHelper {
       "source_uri varchar(255) not null," +
       "update_time timestamp default current_timestamp" +
       ");";
-
+/*
   public void initSavePoint(String dbProp) {
     final String history_db = H2Config.getProperty(dbProp);
     try (final Connection connection = DriverManager.getConnection(history_db)) {
@@ -39,5 +37,5 @@ public class AppHelper {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
+  }*/
 }

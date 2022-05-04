@@ -20,7 +20,7 @@ public class FXMLLoaderFactory {
         return HelloApplication.class.getResourceAsStream("/fxml/" + sceneName);
     }
 
-    @Bean
+//    @Bean
     public Scene explorerScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_EXPLORER_STAGE)){
@@ -28,7 +28,7 @@ public class FXMLLoaderFactory {
         }
     }
 
-    @Bean
+//    @Bean
     public Scene creatorScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_CREATOR_STAGE)){

@@ -23,8 +23,8 @@ import java.util.NoSuchElementException;
 @Controller
 public class ExplorerController {
 
-    @Autowired
-    private FxSavePointService savePointService;
+   /* @Autowired
+    private FxSavePointService savePointService;*/
 
     @FXML
     private MenuItem AboutMenuItem;
@@ -63,12 +63,12 @@ public class ExplorerController {
 
     @PostConstruct
     public void init() {
-        try {
+        /*try {
             List<FxSavePoint> fxSavePoints = savePointService.savePoints();
             savePoints.addAll(fxSavePoints);
         } catch (NoSuchElementException e){
             System.out.println("no save points");
-        }
+        }*/
 //        explorerVBox.getChildren().addAll(savePoints);
     }
     @FXML

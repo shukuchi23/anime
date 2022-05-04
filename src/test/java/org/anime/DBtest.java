@@ -1,7 +1,7 @@
 package org.anime;
 
 import org.anime.exception.NotFoundException;
-import org.anime.web.SavePoint;
+import org.anime.model.SavePoint;
 import org.anime.repository.SavePointRepositoryImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class DBtest {
 
-  @Autowired
+ /* @Autowired
   private JdbcTemplate testJdbcTemplate;
 
   private SavePointRepositoryImpl savePointRepository;
@@ -76,7 +76,7 @@ public class DBtest {
 
   }
 
-  /*@Test
+  *//*@Test
   public void firstTest() {
     final AppHelper appHelper = new AppHelper();
     appHelper.initSavePoint(H2Config.getProperty("test_db"));
@@ -100,7 +100,7 @@ public class DBtest {
       System.out.println("Database connection failure: "
           + ex.getMessage());
     }
-  }*/
+  }*//*
 
   @Test
   public void mustBeExistSavePoint() {
@@ -156,5 +156,5 @@ public class DBtest {
   @After
   public void tearDown() throws Exception {
     savePointRepository.removeAll();
-  }
+  }*/
 }

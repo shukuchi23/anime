@@ -1,12 +1,9 @@
 package org.anime.repository;
 
 import org.anime.exception.NotFoundException;
-import org.anime.web.SavePoint;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.anime.model.SavePoint;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +12,11 @@ import java.util.Optional;
  * @author Karimov Evgeniy
  * 26.04.2022
  */
-@Component
+//@Component
 public class SavePointRepositoryImpl implements SavePointRepository, Droppable {
   private static final String DROP_SQL = "drop table %s;";
-  private final JdbcTemplate jdbcTemplate;
+  private JdbcTemplate jdbcTemplate;
 
-  @Autowired
   public SavePointRepositoryImpl(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
@@ -33,7 +29,7 @@ public class SavePointRepositoryImpl implements SavePointRepository, Droppable {
     jdbcTemplate.update(INSERT_SQL,
         obj.getTitleName(),
         obj.getSeriesNum(),
-        obj.getSeriesDuration().format(DateTimeFormatter.ofPattern("mm:ss")),
+//        obj.getSeriesDuration().format(DateTimeFormatter.ofPattern("mm:ss")),
         obj.getDubName(),
         obj.getVideoUri());
   }
@@ -83,7 +79,7 @@ public class SavePointRepositoryImpl implements SavePointRepository, Droppable {
   public void update(SavePoint nextValue) throws NotFoundException {
     jdbcTemplate.update(UPDATE_SQL,
         nextValue.getSeriesNum(),
-        nextValue.getSeriesDuration().format(DateTimeFormatter.ofPattern("mm:ss")),
+//        nextValue.getSeriesDuration().format(DateTimeFormatter.ofPattern("mm:ss")),
         nextValue.getDubName(),
         nextValue.getVideoUri(),
         new Date(),

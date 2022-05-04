@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Karimov Evgeniy
  * 26.04.2022
  */
-@Component
+//@Component
 public class FxSavePointService {
   /* Класс предоставляющий функционал над объектами класса FxSavePoint.
   * Примерный функционал:
@@ -27,7 +27,7 @@ public class FxSavePointService {
   * */
   private final SavePointRepositoryImpl repository;
 
-  @Autowired
+//  @Autowired
   public FxSavePointService(SavePointRepositoryImpl dao) {
     this.repository = dao;
   }

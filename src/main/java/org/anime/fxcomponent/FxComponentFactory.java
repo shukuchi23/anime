@@ -4,7 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import org.anime.web.SavePoint;
+import org.anime.model.SavePoint;
 import org.anime.utils.IconProvider;
 
 /**

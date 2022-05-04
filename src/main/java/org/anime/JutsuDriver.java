@@ -1,6 +1,6 @@
 package org.anime;
 
-import org.anime.web.SavePoint;
+import org.anime.model.SavePoint;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;

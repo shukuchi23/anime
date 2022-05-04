@@ -1,5 +1,6 @@
 package org.anime.web;
 
+import org.anime.model.SavePoint;
 import org.openqa.selenium.WebElement;
 
 public class PlayerController extends Thread implements AnimeInterface {
@@ -20,7 +21,7 @@ public class PlayerController extends Thread implements AnimeInterface {
 
     @Override
     public WebElement getQualityContainer() {
-
+        return null;
     }
 
     @Override
