@@ -14,6 +14,7 @@ public class SavePoint {
   private MyDuration seriesDuration;
   private String dubName;
   private String videoUri; // https://jut.su/naruto...
+  @JsonSerialize(using = ToStringSerializer.class)
   private Date updateTime;
 
   public SavePoint() {
@@ -76,12 +77,12 @@ public class SavePoint {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     SavePoint savePoint = (SavePoint) o;
-    return seriesNum == savePoint.seriesNum && titleName.equals(savePoint.titleName) && seriesDuration.equals(savePoint.seriesDuration) && Objects.equals(dubName, savePoint.dubName) && videoUri.equals(savePoint.videoUri);
+    return titleName.equals(savePoint.titleName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(titleName, seriesNum, seriesDuration, dubName, videoUri);
+    return Objects.hash(titleName);
   }
 
   public SavePoint(String titleName, int seriesNum, MyDuration seriesDuration, String dubName, Date updateTime, String videoUri) {

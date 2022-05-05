@@ -1,5 +1,5 @@
 {
-  "last_update": "Wed May 04 18:59:23 MSK 2022",
+  "last_update": "Thu May 05 10:15:12 MSK 2022",
   "data": [
     {
       "titleName": "test",
@@ -7,7 +7,7 @@
       "seriesDuration": "11:11",
       "dubName": "test_dub",
       "videoUri": "https://jut.su/saikou-no-ansatsusha/episode-1.html",
-      "updateTime": null
+      "updateTime": "Thu May 05 10:15:12 MSK 2022"
     },
     {
       "titleName": "test1",
@@ -15,7 +15,7 @@
       "seriesDuration": "11:11",
       "dubName": "test_dub",
       "videoUri": "https://jut.su/oresuki/episode-1.html",
-      "updateTime": 1651679962540
+      "updateTime": "Thu May 05 10:15:12 MSK 2022"
     },
     {
       "titleName": "test2",
@@ -23,7 +23,7 @@
       "seriesDuration": "11:11",
       "dubName": "test_dub",
       "videoUri": "https://jut.su/oresuki/episode-1.html",
-      "updateTime": 1651679963219
+      "updateTime": "Thu May 05 10:15:12 MSK 2022"
     },
     {
       "titleName": "test3",
@@ -31,7 +31,7 @@
       "seriesDuration": "11:11",
       "dubName": "test_dub",
       "videoUri": "https://jut.su/oresuki/episode-1.html",
-      "updateTime": 1651679963403
+      "updateTime": "Thu May 05 10:15:12 MSK 2022"
     },
     {
       "titleName": "test4",
@@ -39,15 +39,7 @@
       "seriesDuration": "11:11",
       "dubName": "test_dub",
       "videoUri": "https://jut.su/oresuki/episode-1.html",
-      "updateTime": 1651679963570
-    },
-    {
-      "titleName": "test",
-      "seriesNum": 1,
-      "seriesDuration": "11:11",
-      "dubName": "test_dub",
-      "videoUri": "https://jut.su/saikou-no-ansatsusha/episode-1.html",
-      "updateTime": 1651679959907
+      "updateTime": "Thu May 05 10:15:12 MSK 2022"
     }
   ]
 }
