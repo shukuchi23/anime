@@ -2,12 +2,11 @@ package org.anime.service;
 
 import org.anime.fxcomponent.FxComponentFactory;
 import org.anime.fxcomponent.FxSavePoint;
+import org.anime.repository.SavePointRepository;
 import org.anime.utils.IconProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.anime.repository.SavePointRepositoryImpl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -25,15 +24,15 @@ public class FxSavePointService {
   * *
   * *
   * */
-  private final SavePointRepositoryImpl repository;
+  private final SavePointRepository repository;
 
 //  @Autowired
-  public FxSavePointService(SavePointRepositoryImpl dao) {
-    this.repository = dao;
+  public FxSavePointService(SavePointRepository repository) {
+    this.repository = repository;
   }
 
   @Bean
-  public List<FxSavePoint> savePoints() throws NoSuchElementException {
+  public List<FxSavePoint> savePoints() throws NoSuchElementException, IOException {
     return repository.findAll()
             .stream()
             .map(sp -> {

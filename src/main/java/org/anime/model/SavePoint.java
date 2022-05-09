@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.util.Objects;
 
-public class SavePoint {
+public class SavePoint implements Comparable {
 
   private String titleName;
   private int seriesNum;
@@ -19,6 +19,12 @@ public class SavePoint {
 
   public SavePoint() {
 
+  }
+
+  @Override
+  public int compareTo(Object o) {
+    SavePoint o1 = (SavePoint) o;
+    return getUpdateTime().compareTo(o1.getUpdateTime());
   }
 
   public static class MyDuration {

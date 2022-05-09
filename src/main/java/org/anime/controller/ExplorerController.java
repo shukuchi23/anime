@@ -2,23 +2,14 @@ package org.anime.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import org.anime.fxcomponent.FxSavePoint;
-import org.anime.fxcomponent.FxStageFactory;
-import org.anime.repository.SavePointRepositoryImpl;
-import org.anime.service.FxSavePointService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 public class ExplorerController {

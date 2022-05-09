@@ -16,10 +16,6 @@ public class JsonConfig {
     return getJsonByName("save_point.json");
   }
 
-  @Bean
-  public File testJson(){
-    return getJsonByName("test.json");
-  }
 
   @Bean
   public File settingJson(){

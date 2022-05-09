@@ -35,6 +35,5 @@ public interface SavePointRepository {
 
   boolean remove(String titleName) throws IOException;
   boolean removeAll() throws IOException;
-
-  void update(SavePoint nextValue) throws NotFoundException, IOException;
+  void insertOrUpdate(SavePoint obj) throws IOException;
 }

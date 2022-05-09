@@ -1,18 +1,8 @@
 package org.anime;
 
-import org.anime.exception.NotFoundException;
-import org.anime.model.SavePoint;
-import org.anime.repository.SavePointRepositoryImpl;
-import org.junit.*;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalTime;
-import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

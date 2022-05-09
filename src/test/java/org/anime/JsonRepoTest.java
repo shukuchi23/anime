@@ -11,27 +11,32 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karimov Evgeniy
  * 04.05.2022
  */
 @SpringBootTest
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 public class JsonRepoTest {
   @Autowired
-  @Qualifier("testJson")
-  private File source;
+  private File savePointJson;
 
+  @Autowired
   private SavePointRepository savePointRepository;
 
   @Before
   public void setUp() throws Exception {
-    savePointRepository = new JsonSavePointRepository(source);
+//    savePointRepository = new JsonSavePointRepository(savePointJson);
     final SavePoint test = new SavePoint(
         "test",
         1,
@@ -68,11 +73,11 @@ public class JsonRepoTest {
         "test_dub",
         "https://jut.su/oresuki/episode-1.html"
     );
-    savePointRepository.insert(test);
-    savePointRepository.update(test1);
-    savePointRepository.update(test2);
-    savePointRepository.update(test3);
-    savePointRepository.update(test4);
+    savePointRepository.insertOrUpdate(test);
+    savePointRepository.insertOrUpdate(test1);
+    savePointRepository.insertOrUpdate(test2);
+    savePointRepository.insertOrUpdate(test3);
+    savePointRepository.insertOrUpdate(test4);
   }
 
   @Test
@@ -87,9 +92,28 @@ public class JsonRepoTest {
 
     Assert.assertEquals(test, savePointRepository.findOne(test.getTitleName()).get());
   }
+  @Test
+  public void updateExistSavePoint() throws IOException{
+    SavePoint savePoint = new SavePoint(
+            "test4",
+            2,
+            new SavePoint.MyDuration(11, 12),
+            "new Dub",
+            "https://jut.su/oresuki/episode-1.html");
+
+    SavePoint oldSavePoint = savePointRepository.findAll().stream()
+            .filter(sp -> sp.equals(savePoint))
+            .findFirst()
+            .get();
+
+    savePointRepository.insertOrUpdate(savePoint);
+    List<SavePoint> all = savePointRepository.findAll();
+    Assert.assertNotEquals(oldSavePoint.getDubName(), savePoint.getDubName());
+    Assert.assertNotEquals(oldSavePoint.getUpdateTime(), savePoint.getUpdateTime());
+    Assert.assertEquals(oldSavePoint.getTitleName(), savePoint.getTitleName());
+  }
   @After
   public void tearDown() throws Exception {
     savePointRepository.removeAll();
-    savePointRepository = null;
   }
 }
