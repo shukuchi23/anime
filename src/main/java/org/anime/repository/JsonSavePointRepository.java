@@ -3,18 +3,15 @@ package org.anime.repository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.MissingNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.POJONode;
 import org.anime.exception.NotFoundException;
 import org.anime.model.SavePoint;
 import org.anime.utils.JsonUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +56,19 @@ public class JsonSavePointRepository implements SavePointRepository {
 //    data.add()
     }
 
+    @Override
+    public void insertOrUpdate(SavePoint obj) throws IOException {
+        final ArrayNode nodes = JsonUtils.extractData(root);
+        obj.updateTime();
+        final int ind = findSavePointFromArrayByTitleName(nodes, obj.getTitleName());
+        if (ind == -1)
+            insert(obj);
+        else {
+            nodes.setPOJO(ind, obj);
+            mapper.writeValue(jsonSource, root);
+        }
+    }
+
     private ObjectNode createJsonStruct() throws IOException {
         final ObjectNode objectNode = mapper.createObjectNode().put("last_update", new Date().toString());
         final ArrayNode arrayNode = mapper.createArrayNode();
@@ -70,18 +80,15 @@ public class JsonSavePointRepository implements SavePointRepository {
 
     @Override
     public List<SavePoint> findAll() throws NotFoundException, IOException {
-//    final ArrayNode jsonNodes = JsonUtils.extractData(mapper.readTree(savePointJson));
         final ArrayNode jsonNodes = JsonUtils.extractData(root);
         return StreamSupport.stream(jsonNodes.spliterator(), false)
                 .map(jNode -> JsonUtils.savePointFromJsonNode(mapper, jNode))
-                .sorted((s1, s2)->s2.compareTo(s1))
+                .sorted((s1, s2) -> s2.compareTo(s1))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<SavePoint> findOne(String titleName) throws NotFoundException, IOException {
-//    final ArrayNode jsonNodes = JsonUtils.extractData(mapper.readTree(savePointJson));
-        final ArrayNode jsonNodes = JsonUtils.extractData(root);
         return Optional.ofNullable(findSavePointByTitleName(titleName)
                 .map(jNode -> JsonUtils.savePointFromJsonNode(mapper, jNode))
                 .orElseThrow(() -> new NotFoundException("Запись '%s' не найдена", titleName)));
@@ -89,7 +96,6 @@ public class JsonSavePointRepository implements SavePointRepository {
 
     @Override
     public boolean remove(String titleName) throws IOException {
-//    final ArrayNode jsonNodes = JsonUtils.extractData(mapper.readTree(savePointJson));
         final ArrayNode jsonNodes = JsonUtils.extractData(root);
         final int ind = findSavePointFromArrayByTitleName(jsonNodes, titleName);
         if (ind != -1) {
@@ -100,8 +106,13 @@ public class JsonSavePointRepository implements SavePointRepository {
         return false;
     }
 
+    @Override
+    public boolean removeAll() throws IOException {
+        updateRoot();
+        return JsonUtils.extractData(mapper.readTree(jsonSource)).removeAll() == null;
+    }
+
     private Optional<POJONode> findSavePointByTitleName(String titleName) throws IOException {
-//    final ArrayNode jsonNodes = JsonUtils.extractData(mapper.readTree(savePointJson));
         final ArrayNode jsonNodes = JsonUtils.extractData(root);
         return JsonUtils.toStream(jsonNodes)
                 .filter(jNode -> ((SavePoint) jNode.getPojo()).getTitleName().equals(titleName))
@@ -117,7 +128,7 @@ public class JsonSavePointRepository implements SavePointRepository {
                 POJONode pojoNode = (POJONode) jsonNode;
                 SavePoint pojo = (SavePoint) pojoNode.getPojo();
                 objTitleName = pojo.getTitleName();
-            } else if (jsonNode instanceof ObjectNode){
+            } else if (jsonNode instanceof ObjectNode) {
                 ObjectNode objectNode = (ObjectNode) jsonNode;
                 objTitleName = objectNode.get("titleName").asText();
             }
@@ -127,25 +138,8 @@ public class JsonSavePointRepository implements SavePointRepository {
         return -1;
     }
 
-    @Override
-    public boolean removeAll() throws IOException {
-        updateRoot();
-        return JsonUtils.extractData(mapper.readTree(jsonSource)).removeAll() == null;
-    }
-    @Override
-    public void insertOrUpdate(SavePoint obj) throws IOException {
-        final ArrayNode nodes = JsonUtils.extractData(root);
-        obj.updateTime();
-        final int ind = findSavePointFromArrayByTitleName(nodes, obj.getTitleName());
-        if (ind == -1)
-            insert(obj);
-        else {
-            nodes.setPOJO(ind, obj);
-            mapper.writeValue(jsonSource, root);
-        }
-    }
 
-    private void updateRoot(){
+    private void updateRoot() {
         root.put("last_update", new Date().toString());
     }
 
