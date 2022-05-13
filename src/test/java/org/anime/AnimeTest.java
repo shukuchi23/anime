@@ -20,12 +20,12 @@ public class AnimeTest {
 
   @Test(expected = NotFoundException.class)
   public void notFoundDriver() {
-    WebDriver yandex_driver = DriverConfig.getDriver("yandex_driver");
+//    WebDriver yandex_driver = DriverConfig.getDriver("yandex_driver");
   }
 
   @Test
   public void testAllDrivers() {
-    Assert.assertNotNull(DriverConfig.getDriver("firefox"));
+//    Assert.assertNotNull(DriverConfig.getDriver("firefox"));
 //    Assert.assertNotNull(DriverConfig.getDriver("chrome"));
 //    Assert.assertNotNull(DriverConfig.getDriver("opera"));
   }

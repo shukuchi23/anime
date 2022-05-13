@@ -3,12 +3,15 @@ package org.anime.web;
 import org.anime.model.SavePoint;
 import org.openqa.selenium.WebElement;
 
-public interface AnimeInterface extends AutoCloseable {
+import java.util.Optional;
+
+public interface AnimeInterface {
 //  WebElement getNext();
 //  boolean existNext();
   WebElement getQualityContainer();
   WebElement getPlayButton();
-  WebElement nextSeries();
+  Optional<WebElement> nextSeries();
   SavePoint getInfoAboutSeries();
-
+  void skipOpening();
+  void skipEnding();
 }

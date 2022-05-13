@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -21,6 +22,19 @@ public class DriverConfig {
   @Autowired
   private Environment environment;
 
+  @Bean
+  public WebDriver chromeDriver(){
+    return new ChromeDriver(new ChromeOptions());
+  }
+
+  @Bean
+  public WebDriver firefoxDriver(){
+    return new FirefoxDriver(new FirefoxOptions());
+  }
+
+
+
+/*
   protected static FileInputStream fileInputStream;
   protected static Properties properties;
   static {
@@ -57,5 +71,5 @@ public class DriverConfig {
   }
   public static String getProperty(String key){
     return properties.getProperty(key);
-  }
+  }*/
 }

@@ -5,9 +5,9 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class AnimeService {
-  private AbstractAnimeClient driver;
+  private AbstractAnimePlayer driver;
 
-  public AnimeService(AbstractAnimeClient driver){
+  public AnimeService(AbstractAnimePlayer driver){
     this.driver = driver;
   }
 //  final WebDriverWait webDriverWait = new WebDriverWait(driver, 60 * 25);

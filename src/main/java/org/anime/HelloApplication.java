@@ -1,26 +1,16 @@
 package org.anime;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.anime.config.AppConfig;
 import org.anime.config.DriverConfig;
 import org.anime.config.FXMLLoaderFactory;
 import org.anime.config.JsonConfig;
-import org.anime.fxcomponent.FxSavePoint;
-import org.anime.model.SavePoint;
-import org.anime.service.FxSavePointService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Lazy;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @Lazy
 @SpringBootApplication
@@ -42,7 +32,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   @Override
   public void start(Stage stage) throws IOException {
-    final ObjectMapper objectMapper = new ObjectMapper();
+    /*final ObjectMapper objectMapper = new ObjectMapper();
     SavePoint narutoSavePoint = new SavePoint(
         "Naruto",
         10,
@@ -51,7 +41,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
         "https://jut.su/naruto/episode-1.html"
     );
     final File resultFile = new File("json/test.json");
-    objectMapper.writeValue(resultFile, narutoSavePoint);
+    objectMapper.writeValue(resultFile, narutoSavePoint);*/
 
 //    final Pane exploreStage = stageFactory.getExploreStage();
 //    testInit(exploreStage);
@@ -84,24 +74,4 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
     launchApp(HelloApplication.class, args);
   }
 
-  private void testInit(Pane stage) {
-    /*SavePoint narutoSavePoint = new SavePoint(
-        "Naruto",
-        10,
-        LocalTime.of(0, 11, 11),
-        "AniDub",
-        "https://jut.su/naruto/episode-1.html"
-    );
-    SavePoint bleachSavePoint = new SavePoint(
-        "Bleach",
-        228,
-        LocalTime.of(0, 14, 11),
-        "Subtitles",
-        "https://jut.su/naruto/episode-1.html"
-    );
-
-    final VBox naruto = FxComponentFactory.createSavePointVBox("jutsu.png", narutoSavePoint);
-    final VBox bleach = FxComponentFactory.createSavePointVBox("animego.png", bleachSavePoint);
-    stage.getChildren().addAll(naruto, bleach);*/
-  }
 }

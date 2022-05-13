@@ -1,11 +1,8 @@
 package org.anime.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.annotation.Nullable;
 
 public class MyOption {
-
     private BrowserType browserType;
     private boolean skipOpening;
     private boolean skipEnding;
@@ -17,6 +14,31 @@ public class MyOption {
             instance = new MyOption(browserType, skipOpening, skipEnding);
         return instance;
     }
+
+    public BrowserType getBrowserType() {
+        return browserType;
+    }
+
+    public void setBrowserType(BrowserType browserType) {
+        this.browserType = browserType;
+    }
+
+    public boolean isSkipOpening() {
+        return skipOpening;
+    }
+
+    public void setSkipOpening(boolean skipOpening) {
+        this.skipOpening = skipOpening;
+    }
+
+    public boolean isSkipEnding() {
+        return skipEnding;
+    }
+
+    public void setSkipEnding(boolean skipEnding) {
+        this.skipEnding = skipEnding;
+    }
+
     public void reset(@Nullable BrowserType browserType,
                       @Nullable Boolean skipOpening,
                       @Nullable Boolean skipEnding){

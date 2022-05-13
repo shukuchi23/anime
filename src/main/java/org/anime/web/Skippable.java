@@ -1,5 +1,6 @@
 package org.anime.web;
 
+import javax.annotation.Nullable;
 import java.time.LocalTime;
 
 public interface Skippable {

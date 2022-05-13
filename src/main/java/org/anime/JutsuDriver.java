@@ -4,12 +4,13 @@ import org.anime.model.SavePoint;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.anime.web.AbstractAnimeClient;
+import org.anime.web.AbstractAnimePlayer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
-public class JutsuDriver extends AbstractAnimeClient {
+public class JutsuDriver {
   private static final By PLAYER_SELECTOR = By.id("my-player");
   private static final By EXIST_NEXT_SERIES_SELECTOR = By.cssSelector("a.there_is_link_to_next_episode");
   private static final By WATCHED_SERIES_TIME_SELECTOR = By.cssSelector("span.vjs-current-time-display");
@@ -19,19 +20,6 @@ public class JutsuDriver extends AbstractAnimeClient {
 //  private static final String EXIST_NEXT_SERIES = "a.there_is_link_to_next_episode";
 //  private static final String EXIST_NEXT_SERIES = "a.there_is_link_to_next_episode";
 
-
-  public JutsuDriver(String url) {
-    super(url);
-  }
-
-  public JutsuDriver(String url, String driverProperty) {
-    super(url, driverProperty);
-  }
-
-  @Override
-  protected void saveWatchedState(String filename) {
-
-  }
 /*
   @Override
   public boolean hasNext() {
@@ -78,35 +66,9 @@ public class JutsuDriver extends AbstractAnimeClient {
    *
     * */
 
-  @Override
-  public WebElement getQualityContainer() {
-    return webDriver.findElement(QUALITY_CONTAINER_SELECTOR);
-  }
 
-//  @Override
-  public WebElement findMaxQuality(List<WebElement> qualityContainer) {
-    return null;
-  }
 
-  @Override
-  public WebElement getPlayButton() {
-    return waiter.until(ExpectedConditions.elementToBeClickable(PLAYER_SELECTOR));
-  }
 
-  @Override
-  public WebElement nextSeries() {
-    return null;
-  }
-
-  @Override
-  public SavePoint getInfoAboutSeries() {
-    return null;
-  }
-
-  @Override
-  public void close() throws IOException {
-
-  }
 
   /*@Override
   public String getTitleName() {
