@@ -25,8 +25,15 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
   }
 
   @Override
-  public WebElement getQualityContainer() {
-    return client.waiter.until(ExpectedConditions.visibilityOfElementLocated(JutsuInterface.QUALITY_CONTAINER_SELECTOR));
+  public WebClient getClient() {
+    return client;
+  }
+
+  @Override
+  public List<WebElement> getQualityContainer() {
+    // todo: нужно пофиксить
+    return client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.QUALITY_CONTAINER_SELECTOR))
+        .findElements(JutsuInterface.QUALITY_CONTAINER_SELECTOR);
   }
 
   @Override
@@ -46,7 +53,7 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
     savePoint.setDubName("AniDub");
     final List<WebElement> elements = webDriver.findElements(By.cssSelector("span[itemprop='name']"));
     final String series = elements.get(3).getText().split(" ")[0];
-    savePoint.setTitleName( elements.get(2).getText());
+    savePoint.setTitleName(elements.get(2).getText());
     savePoint.setSeriesNum(Integer.parseInt(series));
     savePoint.setVideoUri(webDriver.getCurrentUrl());
     final SavePoint.MyDuration myDuration =
@@ -57,13 +64,12 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
 
   @Override
   public void skipOpening() {
-    client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.SKIP_OPENING_BUTTON))
+    client.waiter.until(ExpectedConditions.visibilityOfElementLocated(JutsuInterface.SKIP_OPENING_BUTTON))
         .click();
   }
 
   @Override
   public void skipEnding() {
-    final WebElement element = nextSeries().orElseThrow(NoSuchSeriesException::new);
-    client.waiter.until(ExpectedConditions.elementToBeClickable(element)).click();
+    client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.SKIP_ENDING_BUTTON)).click();
   }
 }

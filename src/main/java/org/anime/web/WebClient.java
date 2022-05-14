@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 public class WebClient implements AutoCloseable {
     protected WebDriver webDriver;
     protected WebDriverWait waiter;
-
+    public void get(String url){
+        webDriver.get(url);
+    }
     public WebClient(MyOption option){
         DriverConfig driverConfig = new DriverConfig();
         switch (option.getBrowserType()){

@@ -3,8 +3,10 @@ package org.anime.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 public class SavePoint implements Comparable {
 
@@ -28,6 +30,7 @@ public class SavePoint implements Comparable {
   }
 
   public static class MyDuration {
+    public static MyDuration ZERO = new MyDuration(0,0);
     private int minutes;
     private int seconds;
 
@@ -91,7 +94,7 @@ public class SavePoint implements Comparable {
     return Objects.hash(titleName);
   }
 
-  public SavePoint(String titleName, int seriesNum, MyDuration seriesDuration, String dubName, Date updateTime, String videoUri) {
+  public SavePoint(String titleName, int seriesNum, @Nullable MyDuration seriesDuration, String dubName, Date updateTime, String videoUri) {
     this.titleName = titleName;
     this.seriesNum = seriesNum;
     this.seriesDuration = seriesDuration;
@@ -100,11 +103,11 @@ public class SavePoint implements Comparable {
     this.videoUri = videoUri;
   }
 
-  public SavePoint(String titleName, int seriesNum, MyDuration seriesDuration, String dubName, String videoUri) {
+  public SavePoint(String titleName, int seriesNum, @Nullable MyDuration seriesDuration, @Nullable String dubName, String videoUri) {
     this.titleName = titleName;
     this.seriesNum = seriesNum;
-    this.seriesDuration = seriesDuration;
-    this.dubName = dubName;
+    this.seriesDuration = Optional.ofNullable(seriesDuration).orElse(MyDuration.ZERO);
+    this.dubName = Optional.ofNullable(dubName).orElse("default");
     this.videoUri = videoUri;
   }
 

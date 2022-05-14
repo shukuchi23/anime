@@ -15,4 +15,5 @@ public interface JutsuInterface extends AnimeInterface, NativeSkippable {
   By SERIES_TIME_SELECTOR = By.cssSelector("span.vjs-duration-display");
   By QUALITY_CONTAINER_SELECTOR = By.cssSelector("li.vjs-menu-item");
   By SKIP_OPENING_BUTTON =  By.cssSelector("div.vjs-overlay.vjs-overlay-bottom-left.vjs-overlay-skip-intro.vjs-overlay-background");
+  By SKIP_ENDING_BUTTON =  By.cssSelector("[title='Перейти к следующему эпизоду']");
 }

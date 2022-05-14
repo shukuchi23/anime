@@ -1,22 +1,56 @@
 package org.anime;
 
 import org.anime.config.DriverConfig;
+import org.anime.model.SavePoint;
+import org.anime.repository.JsonSavePointRepository;
+import org.anime.repository.SavePointRepository;
+import org.anime.web.AnimeClient;
+import org.anime.web.AnimeInterface;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.anime.web.AnimeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class AnimeTest {
+  @Autowired
+  private AnimeInterface jutsuPlayer;
+  @Autowired
+  private JsonSavePointRepository savePointRepository;
 
-  private AnimeService service;
-//  private WebDriver driver;
+  private AnimeClient animeClient;
+
+
+
+  @Test
+  public void oneSeriesWatch(){
+    animeClient = new AnimeClient(savePointRepository, jutsuPlayer, 20);
+    SavePoint testSp = new SavePoint("Самурай Чамплу",
+        25,
+        null,
+        null,
+        "https://jut.su/samurai-champlo/episode-25.html");
+    animeClient.startSeries(testSp);
+    /*try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }*/
+  }
+
+  @After
+  public void afterClass() {
+    if (animeClient != null)
+      animeClient.stopTimer();
+  }
 
   @Test(expected = NotFoundException.class)
   public void notFoundDriver() {
