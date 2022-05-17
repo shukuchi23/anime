@@ -8,8 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * @author Karimov Evgeniy
@@ -31,9 +34,10 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
 
   @Override
   public List<WebElement> getQualityContainer() {
-    // todo: нужно пофиксить
-    return client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.QUALITY_CONTAINER_SELECTOR))
-        .findElements(JutsuInterface.QUALITY_CONTAINER_SELECTOR);
+//    "button.vjs-menu-button.vjs-menu-button-popup.vjs-button[title='Выбрать качество']"
+    client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
+        "button.vjs-menu-button.vjs-menu-button-popup.vjs-button[title='Выбрать качество']"))).click();
+    return client.webDriver.findElements(JutsuInterface.QUALITY_CONTAINER_SELECTOR);
   }
 
   @Override
@@ -51,15 +55,35 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
     final WebDriver webDriver = client.webDriver;
     final SavePoint savePoint = new SavePoint();
     savePoint.setDubName("AniDub");
-    final List<WebElement> elements = webDriver.findElements(By.cssSelector("span[itemprop='name']"));
-    final String series = elements.get(3).getText().split(" ")[0];
-    savePoint.setTitleName(elements.get(2).getText());
-    savePoint.setSeriesNum(Integer.parseInt(series));
+    final WebElement element = webDriver.findElement(By.cssSelector("h1.header_video>span"));
+    String[] titleAndSeries = extractNameAndSeries(element.getText());
+    savePoint.setTitleName(titleAndSeries[0]);
+    savePoint.setSeriesNum(Integer.parseInt(titleAndSeries[1]));
     savePoint.setVideoUri(webDriver.getCurrentUrl());
+    String duration = webDriver.findElement(By.cssSelector(".vjs-current-time-display")).getText();
+    // todo: работает только если видно время аниме
     final SavePoint.MyDuration myDuration =
-        new SavePoint.MyDuration(webDriver.findElement(By.cssSelector(".vjs-current-time-display")).getText());
+        new SavePoint.MyDuration(duration);
     savePoint.setSeriesDuration(myDuration);
     return savePoint;
+  }
+
+  private static String[] extractNameAndSeries(String text) {
+    String s = text.toLowerCase(Locale.ROOT);
+    int frstDigInd = getFirstDigitByTailOnString(s);
+    return new String[]{text.substring(0, frstDigInd - 1), text.substring(frstDigInd, text.lastIndexOf(' '))};
+  }
+
+  private static int getFirstDigitByTailOnString(String txt) {
+    char[] chars = txt.toCharArray();
+    int rez = -1;
+    for (int i = txt.length() - 1; i != 0; i--) {
+      if (chars[i] == ' ' && rez != -1)
+        return rez;
+      if (Character.isDigit(chars[i]))
+        rez = i;
+    }
+    return -1;
   }
 
   @Override
