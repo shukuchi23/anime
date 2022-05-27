@@ -20,7 +20,8 @@ public class SavePoint implements Comparable {
   private Date updateTime;
 
   public SavePoint() {
-
+    seriesDuration = MyDuration.ZERO;
+    updateTime();
   }
 
   @Override
@@ -33,6 +34,10 @@ public class SavePoint implements Comparable {
     public static MyDuration ZERO = new MyDuration(0,0);
     private int minutes;
     private int seconds;
+
+    public int toSecond(){
+      return minutes * 60 + seconds;
+    }
 
     @Override
     public String toString() {

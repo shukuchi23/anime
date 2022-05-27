@@ -16,9 +16,11 @@ import org.openqa.selenium.WebDriver;
 import org.anime.web.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 public class AnimeTest {
   @Autowired
@@ -35,9 +37,10 @@ public class AnimeTest {
     animeClient = new AnimeClient(savePointRepository, jutsuPlayer, 20);
     SavePoint testSp = new SavePoint("Самурай Чамплу",
         25,
-        null,
+        new SavePoint.MyDuration(2,0),
         null,
         "https://jut.su/samurai-champlo/episode-25.html");
+
     animeClient.startSeries(testSp);
     /*try {
       Thread.sleep(5000);

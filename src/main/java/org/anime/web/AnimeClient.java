@@ -21,19 +21,21 @@ public class AnimeClient {
   private SavePointRepository repository;
   private AnimeInterface animeInterface;
   private int secToAutosave;
-  private  Boolean needToStop = false;
+  private Boolean needToStop = false;
+//  private SavePoint savePoint = null;
   private final Timer timer = new Timer(true);
+
   private final TimerTask task = new TimerTask() {
     @Override
     public void run() {
       try {
-        SavePoint infoAboutSeries = animeInterface.getInfoAboutSeries();
+        SavePoint infoAboutSeries = animeInterface.getInfoAboutSeries(savePoint);
         if (infoAboutSeries != null) {
           System.out.println("-- [autosave] - saved: " + infoAboutSeries);
           savePoint = infoAboutSeries;
         }
         repository.insertOrUpdate(savePoint);
-        synchronized (needToStop){
+        synchronized (needToStop) {
           if (needToStop)
             throw new BrowserWasClosedException("-- [autosave] - сlosed");
         }
@@ -60,25 +62,29 @@ public class AnimeClient {
     try {
       animeInterface.getClient().get(sp.getVideoUri());
       animeInterface.getPlayButton().click();
-      animeInterface.skipOpening();
+      animeInterface.getFullScreenButton().click();
+      animeInterface.startWithTime(savePoint.getSeriesDuration());
       List<WebElement> qualities = animeInterface.getQualityContainer();
       final WebElement maxQuality = findMaxQuality(qualities);
       if (!maxQuality.isSelected()) {
         maxQuality.click();
       }
       timer.scheduleAtFixedRate(task, 0, 1000L * secToAutosave);
+//      animeInterface.skipOpening();
       animeInterface.skipEnding();
       System.out.println("-- [autosave] - run ");
     } catch (PlayerException | BrowserWasClosedException e) {
       timer.cancel();
     }
   }
-  public void stopTimer(){
-    synchronized (needToStop){
+
+  public void stopTimer() {
+    synchronized (needToStop) {
       needToStop = true;
     }
   }
-  private WebElement findMaxQuality(List<WebElement> container){
+
+  private WebElement findMaxQuality(List<WebElement> container) {
 //    $$("li.vjs-menu-item")[1].children[0].innerText
     return container.get(1);
   }
