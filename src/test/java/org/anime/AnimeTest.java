@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+
 @SpringBootTest
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -35,18 +37,24 @@ public class AnimeTest {
   @Test
   public void oneSeriesWatch(){
     animeClient = new AnimeClient(savePointRepository, jutsuPlayer, 20);
-    SavePoint testSp = new SavePoint("Самурай Чамплу",
+   /* SavePoint testSp = new SavePoint("Самурай Чамплу",
         25,
         new SavePoint.MyDuration(2,0),
         null,
-        "https://jut.su/samurai-champlo/episode-25.html");
-
-    animeClient.startSeries(testSp);
-    /*try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
+        "https://jut.su/samurai-champlo/episode-25.html");*/
+    try {
+      final SavePoint savePoint = savePointRepository
+          .findOne("Самурай Чамплу")
+          .orElse(new SavePoint(
+              "Самурай Чамплу",
+              25,
+              new SavePoint.MyDuration(2, 0),
+              null,
+              "https://jut.su/samurai-champlo/episode-25.html"));
+      animeClient.startSeries(savePoint);
+    } catch (IOException e) {
       e.printStackTrace();
-    }*/
+    }
   }
 
   @After

@@ -60,24 +60,31 @@ public class AnimeClient {
   public void startSeries(SavePoint sp) {
     savePoint = sp;
     try {
-      animeInterface.getClient().get(sp.getVideoUri());
-      animeInterface.getPlayButton().click();
-      animeInterface.getFullScreenButton().click();
-      animeInterface.startWithTime(savePoint.getSeriesDuration());
-      List<WebElement> qualities = animeInterface.getQualityContainer();
-      final WebElement maxQuality = findMaxQuality(qualities);
-      if (!maxQuality.isSelected()) {
-        maxQuality.click();
+      while(true) {
+        animeInterface.getClient().get(sp.getVideoUri());
+        animeInterface.getPlayButton().click();
+        animeInterface.getFullScreenButton().click();
+
+        animeInterface.startWithTime(savePoint.getSeriesDuration());
+        List<WebElement> qualities = animeInterface.getQualityContainer();
+        final WebElement maxQuality = findMaxQuality(qualities);
+        if (!maxQuality.isSelected()) {
+          maxQuality.click();
+        }
+        timer.scheduleAtFixedRate(task, 0, 1000L * secToAutosave);
+        System.out.println("-- [autosave] - run ");
+        animeInterface.skipOpening();
+        System.out.println("-- opening was skipped ");
+        animeInterface.skipEnding();
+        System.out.println("-- ending was skipped ");
       }
-      timer.scheduleAtFixedRate(task, 0, 1000L * secToAutosave);
-//      animeInterface.skipOpening();
-      animeInterface.skipEnding();
-      System.out.println("-- [autosave] - run ");
     } catch (PlayerException | BrowserWasClosedException e) {
       timer.cancel();
     }
   }
+  public void pauseTimer(){
 
+  }
   public void stopTimer() {
     synchronized (needToStop) {
       needToStop = true;

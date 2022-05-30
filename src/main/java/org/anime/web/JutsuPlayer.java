@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class JutsuPlayer implements NativeSkippable, JutsuInterface {
   private final WebClient client;
 
+
   public JutsuPlayer(WebClient client) {
     this.client = client;
   }
@@ -60,7 +61,6 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
   @Override
   public void startWithTime(SavePoint.MyDuration seriesDuration) {
     final WebElement progressBar = client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.vjs-progress-control.vjs-control")));
-    // todo ты тупая сука лил бич эй ступид
     final Actions action = new Actions(client.webDriver);
     findStartTime(seriesDuration, action, progressBar);
   }

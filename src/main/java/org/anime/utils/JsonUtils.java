@@ -9,9 +9,7 @@ import com.fasterxml.jackson.databind.node.POJONode;
 import org.anime.model.SavePoint;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Spliterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -46,6 +44,6 @@ public class JsonUtils {
 
     public static Stream<POJONode> toStream(ArrayNode arrayNode) {
         return StreamSupport.stream(arrayNode.spliterator(), false)
-                .map(n -> (POJONode) n);
+            .map(n -> new NodeAdapter((ObjectNode) n, false));
     }
 }
