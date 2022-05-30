@@ -62,12 +62,33 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
     final WebElement progressBar = client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.vjs-progress-control.vjs-control")));
     // todo ты тупая сука лил бич эй ступид
     final Actions action = new Actions(client.webDriver);
+    findStartTime(seriesDuration, action, progressBar);
+  }
+
+  private void findStartTime(SavePoint.MyDuration target, Actions actions, WebElement progressBar){
     final int width = progressBar.getSize().getWidth();
-    int beginNum = -(width / 2);
-    getPlayButton().click();
-    int K = 9;
-    action.moveToElement(progressBar, beginNum + seriesDuration.toSecond() + K, 1).click().perform();
-    System.out.println();
+    int left = -(width / 2);
+    int right = width / 2;
+    SavePoint.MyDuration tmp = new SavePoint.MyDuration();
+    int curr;
+    while (true){
+      curr = (left + right) / 2;
+      actions.moveToElement(progressBar, curr, 1).perform();
+      String elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
+      while (elementInnerText.equals("-:-")) {
+        actions.moveToElement(progressBar, curr - 1, 1).perform();
+        elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
+      }
+      tmp.reset(elementInnerText);
+      final int diff = target.compareTo(tmp);
+      if (diff > 0)
+        left = curr;
+      else if (diff < 0)
+        right = curr;
+      else
+        break;
+    }
+    actions.moveToElement(progressBar, curr, 1).click().perform();
   }
 
   @Override

@@ -30,11 +30,22 @@ public class SavePoint implements Comparable {
     return getUpdateTime().compareTo(o1.getUpdateTime());
   }
 
-  public static class MyDuration {
+  public static class MyDuration implements Comparable<MyDuration> {
     public static MyDuration ZERO = new MyDuration(0,0);
     private int minutes;
     private int seconds;
+    public MyDuration(){
 
+    }
+    public MyDuration reset(String time){
+      fromString(time);
+      return this;
+    }
+    private void fromString(String time){
+      final String[] split = time.split(":");
+      minutes = Integer.parseInt(split[0]);
+      seconds = Integer.parseInt(split[1]);
+    }
     public int toSecond(){
       return minutes * 60 + seconds;
     }
@@ -75,14 +86,17 @@ public class SavePoint implements Comparable {
     }
 
     public MyDuration(String str) {
-      final String[] split = str.split(":");
-      minutes = Integer.parseInt(split[0]);
-      seconds = Integer.parseInt(split[1]);
+      fromString(str);
     }
 
     public MyDuration(int minutes, int seconds) {
       this.minutes = minutes;
       this.seconds = seconds;
+    }
+
+    @Override
+    public int compareTo(MyDuration o) {
+      return this.toSecond() - o.toSecond();
     }
   }
 

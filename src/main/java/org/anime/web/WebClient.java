@@ -2,9 +2,11 @@ package org.anime.web;
 
 import org.anime.config.DriverConfig;
 import org.anime.model.MyOption;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +64,11 @@ public class WebClient implements AutoCloseable {
     public String getElementInnerText(String cssSelectorQuery){
         final JavascriptExecutor webDriver = (JavascriptExecutor) this.webDriver;
         return (String)webDriver.executeScript(String.format(JS_INNER_TEXT_FORMAT, cssSelectorQuery, 0));
+    }
+
+    public String getElementInnerTextWithWaiter(String cssSelectorQuery){
+        return waiter.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelectorQuery)))
+            .getText();
     }
 
     public String[] getElementsInnerText(String cssSelectorQuery, Object[] indexes){
