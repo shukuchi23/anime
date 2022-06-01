@@ -51,7 +51,7 @@ public class AnimeTest {
               new SavePoint.MyDuration(2, 0),
               null,
               "https://jut.su/samurai-champlo/episode-25.html"));
-      animeClient.startSeries(savePoint);
+      animeClient.watch(savePoint);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -59,8 +59,8 @@ public class AnimeTest {
 
   @After
   public void afterClass() {
-    if (animeClient != null)
-      animeClient.stopTimer();
+    /*if (animeClient != null)
+      animeClient.stopTimer();*/
   }
 
   @Test(expected = NotFoundException.class)

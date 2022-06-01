@@ -18,7 +18,9 @@ public class WebClient implements AutoCloseable {
     public void get(String url){
         webDriver.get(url);
     }
-
+    public String getUrl(){
+        return webDriver.getCurrentUrl();
+    }
     public WebClient(MyOption option){
         DriverConfig driverConfig = new DriverConfig();
         switch (option.getBrowserType()){
@@ -70,6 +72,8 @@ public class WebClient implements AutoCloseable {
         return waiter.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelectorQuery)))
             .getText();
     }
+
+    
 
     public String[] getElementsInnerText(String cssSelectorQuery, Object[] indexes){
         final JavascriptExecutor webDriver = (JavascriptExecutor) this.webDriver;

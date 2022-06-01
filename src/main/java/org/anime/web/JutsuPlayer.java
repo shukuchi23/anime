@@ -1,19 +1,18 @@
 package org.anime.web;
 
 import org.anime.model.SavePoint;
+import org.anime.utils.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Karimov Evgeniy
@@ -21,9 +20,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Component
-public class JutsuPlayer implements NativeSkippable, JutsuInterface {
+public class JutsuPlayer implements JutsuInterface {
   private final WebClient client;
-
 
   public JutsuPlayer(WebClient client) {
     this.client = client;
@@ -59,28 +57,39 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
   }
 
   @Override
-  public void startWithTime(SavePoint.MyDuration seriesDuration) {
+  public boolean startWithTime(SavePoint.MyDuration seriesDuration) {
     final WebElement progressBar = client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.vjs-progress-control.vjs-control")));
     final Actions action = new Actions(client.webDriver);
-    findStartTime(seriesDuration, action, progressBar);
+    return findStartTime(seriesDuration, action, progressBar);
   }
 
-  private void findStartTime(SavePoint.MyDuration target, Actions actions, WebElement progressBar){
+  private boolean findStartTime(SavePoint.MyDuration target, Actions actions, WebElement progressBar){
     final int width = progressBar.getSize().getWidth();
     int left = -(width / 2);
     int right = width / 2;
-    SavePoint.MyDuration tmp = new SavePoint.MyDuration();
+    SavePoint.MyDuration pointer = new SavePoint.MyDuration();
+    SavePoint.MyDuration middle = new SavePoint.MyDuration();
     int curr;
+
+    actions.moveToElement(progressBar, 0, 1).perform();
+    String elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
+    while (elementInnerText.equals("-:-")) {
+      actions.moveToElement(progressBar, -1, 1).perform();
+      elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
+    }
+    middle.reset(elementInnerText);
+
     while (true){
       curr = (left + right) / 2;
       actions.moveToElement(progressBar, curr, 1).perform();
-      String elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
+      elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
       while (elementInnerText.equals("-:-")) {
         actions.moveToElement(progressBar, curr - 1, 1).perform();
         elementInnerText = client.getElementInnerTextWithWaiter("div.vjs-time-tooltip");
       }
-      tmp.reset(elementInnerText);
-      final int diff = target.compareTo(tmp);
+      pointer.reset(elementInnerText);
+
+      final int diff = target.compareTo(pointer);
       if (diff > 0)
         left = curr;
       else if (diff < 0)
@@ -89,6 +98,7 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
         break;
     }
     actions.moveToElement(progressBar, curr, 1).click().perform();
+    return pointer.compareTo(middle) < 0;
   }
 
   @Override
@@ -121,6 +131,8 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
     return oldSavePoint;
   }
 
+
+
   private static String[] extractNameAndSeries(String text) {
     String s = text.toLowerCase(Locale.ROOT);
     int frstDigInd = getFirstDigitByTailOnString(s);
@@ -138,6 +150,15 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
     }
     return -1;
   }
+  @Override
+  public WebElement getSkipOpeningButtonWhenVisible() {
+    return client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.SKIP_OPENING_BUTTON));
+  }
+
+  @Override
+  public WebElement getSkipEndingButtonWhenVisible() {
+    return client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.SKIP_ENDING_BUTTON));
+  }
 
   @Override
   public void skipOpening() {
@@ -148,5 +169,6 @@ public class JutsuPlayer implements NativeSkippable, JutsuInterface {
   @Override
   public void skipEnding() {
     client.waiter.until(ExpectedConditions.elementToBeClickable(JutsuInterface.SKIP_ENDING_BUTTON)).click();
+
   }
 }

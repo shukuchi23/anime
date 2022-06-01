@@ -4,7 +4,8 @@ package org.anime.events;
  * @author Karimov Evgeniy
  * 30.05.2022
  */
-public interface Event {
+public interface Event<P extends EventHandler> {
+
   String getMsg();
 
   /*todo: 1) возвращать обработчик связанный с ивентом
