@@ -78,12 +78,6 @@ public class WebClient implements AutoCloseable {
         }
     }
 
-
-    public int getCountOfElements(String cssSelectorQuery){
-        final JavascriptExecutor webDriver = (JavascriptExecutor) this.webDriver;
-        final Object o = webDriver.executeScript(String.format(JS_LENGTH_FORMAT, cssSelectorQuery));
-        return (Integer) o;
-    }
     public String getElementInnerTextWithWaiter(String cssSelectorQuery){
         return waiter.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelectorQuery)))
             .getText();
