@@ -160,61 +160,37 @@ public class AnimeClient {
       if (opening != null && !opening.isDone())
         opening.cancel(true);
       preSwitchSeries();
-      element.click();
       seriesIsWatched = false;
+      element.click();
+      postSwitchSeries();
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
 
-    /*try {
-      while (true) {
-        if (!seriesWasSwitched)
-          initPlayer();
-        else
-          preStart();
-        start();
-        animeInterface.startWithTime(savePoint.getSeriesDuration());
-        synchronized (this){
-          this.wait(5000);
-          System.out.println("wait 5000");
-        }
-        getOpeningFuture()
-            .thenAccept(v -> clickTheShit());
-        if (!timerIsStart) {
-          timer.scheduleAtFixedRate(task, 0, 1000L * secToAutosave);
-          timerIsStart = true;
-        }
-        System.out.println("-- [autosave] - run ");
-        getEndingFuture().thenAccept(v -> clickTheShit());
-        postStart();
-      }
-    } catch (PlayerException | BrowserWasClosedException e) {
-      timer.cancel();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }*/
   }
 
 
   // выбор качества и фул скрин
   public void start() {
-    synchronized (this) {
-      animeInterface.getPlayButton().click();
+    animeInterface.getPlayButton().click();
+    log("start");
+    /*synchronized (this) {
       try {
         this.wait(500);
         System.out.println("wait");
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-    }
+    }*/
   }
 
   public void initPlayer() {
     System.out.println("initPlayer");
     synchronized (savePoint) {
-      if (firstTime)
+      if (firstTime) {
         animeInterface.getClient().get(savePoint.getVideoUri());
-
+        firstTime = false;
+      }
       start();
       animeInterface.getFullScreenButton().click();
       List<WebElement> qualities = animeInterface.getQualityContainer();
@@ -223,6 +199,8 @@ public class AnimeClient {
         maxQuality.click();
       start();
       needSkipOpening = animeInterface.startWithTime(savePoint.getSeriesDuration());
+      if (!SavePoint.isNextSavePoint(savePoint))
+      start();
     }
   }
 
@@ -246,15 +224,14 @@ public class AnimeClient {
       this.savePoint.setSeriesDuration(SavePoint.MyDuration.ZERO);
     }
   }
-
-  private CompletableFuture<Void> getOpeningFuture() {
-    return CompletableFuture.supplyAsync(waitOpening)
-        .thenAccept(this::setSkipButton);
-  }
-
-  private CompletableFuture<Void> getEndingFuture() {
-    return CompletableFuture.supplyAsync(waitEnding)
-        .thenAccept(this::setSkipButton);
+  public synchronized void postSwitchSeries(){
+    log("postSwitchSeries");
+    try {
+      this.wait(500);
+      savePoint = animeInterface.getInfoAboutSeries(null);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   private WebElement findMaxQuality(List<WebElement> container) {

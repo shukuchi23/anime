@@ -58,6 +58,8 @@ public class JutsuPlayer implements JutsuInterface {
 
   @Override
   public boolean startWithTime(SavePoint.MyDuration seriesDuration) {
+    if (SavePoint.MyDuration.ZERO.equals(seriesDuration))
+      return true;
     final WebElement progressBar = client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.vjs-progress-control.vjs-control")));
     final Actions action = new Actions(client.webDriver);
     return findStartTime(seriesDuration, action, progressBar);
@@ -100,6 +102,8 @@ public class JutsuPlayer implements JutsuInterface {
     actions.moveToElement(progressBar, curr, 1).click().perform();
     return pointer.compareTo(middle) < 0;
   }
+
+
 
   @Override
   public SavePoint getInfoAboutSeries(@Nullable SavePoint oldSavePoint) {

@@ -30,6 +30,20 @@ public class SavePoint implements Comparable {
     return getUpdateTime().compareTo(o1.getUpdateTime());
   }
 
+  public static SavePoint getNextSeries(SavePoint savePoint){
+    return new SavePoint(savePoint.titleName,
+        savePoint.getSeriesNum() + 1,
+        null,
+        savePoint.getDubName(),
+        null);
+  }
+  public static boolean isNextSavePoint(SavePoint savePoint){
+    return savePoint.titleName != null &&
+        savePoint.seriesNum != 0 &&
+        savePoint.seriesDuration.equals(MyDuration.ZERO) &&
+        savePoint.getVideoUri() == null;
+  }
+
   public static class MyDuration implements Comparable<MyDuration> {
     public static MyDuration ZERO = new MyDuration(0,0);
     private int minutes;
