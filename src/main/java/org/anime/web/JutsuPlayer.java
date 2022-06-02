@@ -65,6 +65,13 @@ public class JutsuPlayer implements JutsuInterface {
     return findStartTime(seriesDuration, action, progressBar);
   }
 
+  @Override
+  public boolean isLastEpisode() {
+    return !client.existObject(JutsuInterface.EXIST_NEXT_SERIES_SELECTOR);
+  }
+
+
+
   private boolean findStartTime(SavePoint.MyDuration target, Actions actions, WebElement progressBar){
     final int width = progressBar.getSize().getWidth();
     int left = -(width / 2);
@@ -134,6 +141,8 @@ public class JutsuPlayer implements JutsuInterface {
     oldSavePoint.setSeriesDuration(myDuration);
     return oldSavePoint;
   }
+
+
 
 
 

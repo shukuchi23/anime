@@ -2,17 +2,18 @@ package org.anime.web;
 
 import org.anime.config.DriverConfig;
 import org.anime.model.MyOption;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Component
 public class WebClient implements AutoCloseable {
     protected static final String JS_INNER_TEXT_FORMAT = "return $('%s')[%d].innerText";
+    protected static final String JS_LENGTH_FORMAT = "return $('%s').length";
     protected WebDriver webDriver;
     protected WebDriverWait waiter;
     public void get(String url){
@@ -68,6 +69,21 @@ public class WebClient implements AutoCloseable {
         return (String)webDriver.executeScript(String.format(JS_INNER_TEXT_FORMAT, cssSelectorQuery, 0));
     }
 
+    public boolean existObject(By selector){
+        try {
+            webDriver.findElement(selector);
+            return true;
+        } catch (NoSuchElementException exception){
+            return false;
+        }
+    }
+
+
+    public int getCountOfElements(String cssSelectorQuery){
+        final JavascriptExecutor webDriver = (JavascriptExecutor) this.webDriver;
+        final Object o = webDriver.executeScript(String.format(JS_LENGTH_FORMAT, cssSelectorQuery));
+        return (Integer) o;
+    }
     public String getElementInnerTextWithWaiter(String cssSelectorQuery){
         return waiter.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelectorQuery)))
             .getText();

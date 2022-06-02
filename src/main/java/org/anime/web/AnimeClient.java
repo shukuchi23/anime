@@ -31,33 +31,6 @@ public class AnimeClient {
   private AutoSaveTask task;
   private boolean firstTime;
   private boolean needSkipOpening;
-  /*private final TimerTask task = new TimerTask() {
-    @Override
-    public void run() {
-      try {
-        synchronized (this) {
-          if (needWait) {
-            this.wait(500);
-            log(Thread.currentThread().getName(), " is waiting...");
-          }
-        }
-        SavePoint infoAboutSeries = animeInterface.getInfoAboutSeries(savePoint);
-        if (infoAboutSeries != null) {
-          log("autosave", "saved: " + infoAboutSeries);
-          savePoint = infoAboutSeries;
-        }
-        repository.insertOrUpdate(savePoint);
-        synchronized (needToStop) {
-          if (needToStop)
-            throw new BrowserWasClosedException("-- [autosave] - сlosed");
-        }
-      } catch (IOException e) {
-        throw new PlayerException("что-то остановило плеер: " + e.getMessage());
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  };*/
 
   public void startAutoSave() {
     running = true;
@@ -103,18 +76,6 @@ public class AnimeClient {
     }
   }
 
-  public synchronized void clickTheShit() {
-    synchronized (skipButton) {
-      skipButton.click();
-    }
-  }
-
-  public void setSkipButton(WebElement element) {
-    synchronized (skipButton) {
-      skipButton = element;
-    }
-  }
-
   private SavePoint savePoint;
 
   private Supplier<WebElement> waitOpening = () -> {
@@ -133,6 +94,7 @@ public class AnimeClient {
   public void watch(SavePoint sp) {
     savePoint = sp;
     firstTime = true;
+
     while (true) {
       if (!seriesIsWatched)
         startSeries();
@@ -141,6 +103,7 @@ public class AnimeClient {
   }
 
   private boolean seriesIsWatched;
+  private boolean isLastEpisode;
 
   public void startSeries() {
     seriesIsWatched = true;
@@ -151,20 +114,20 @@ public class AnimeClient {
     if (needSkipOpening)
       opening = CompletableFuture.supplyAsync(waitOpening)
           .thenAccept(WebElement::click);
-
-    CompletableFuture<WebElement> skipButton = CompletableFuture.supplyAsync(waitEnding);
-
-    WebElement element;
-    try {
-      element = skipButton.get();
-      if (opening != null && !opening.isDone())
-        opening.cancel(true);
-      preSwitchSeries();
-      seriesIsWatched = false;
-      element.click();
-      postSwitchSeries();
-    } catch (InterruptedException | ExecutionException e) {
-      e.printStackTrace();
+    if (!isLastEpisode) {
+      CompletableFuture<WebElement> skipButton = CompletableFuture.supplyAsync(waitEnding);
+      WebElement element;
+      try {
+        element = skipButton.get();
+        if (opening != null && !opening.isDone())
+          opening.cancel(true);
+        preSwitchSeries();
+        seriesIsWatched = false;
+        element.click();
+        postSwitchSeries();
+      } catch (InterruptedException | ExecutionException e) {
+        e.printStackTrace();
+      }
     }
 
   }
@@ -191,6 +154,7 @@ public class AnimeClient {
         animeInterface.getClient().get(savePoint.getVideoUri());
         firstTime = false;
       }
+      isLastEpisode = animeInterface.isLastEpisode();
       start();
       animeInterface.getFullScreenButton().click();
       List<WebElement> qualities = animeInterface.getQualityContainer();
@@ -200,7 +164,7 @@ public class AnimeClient {
       start();
       needSkipOpening = animeInterface.startWithTime(savePoint.getSeriesDuration());
       if (!SavePoint.isNextSavePoint(savePoint))
-      start();
+        start();
     }
   }
 
@@ -224,7 +188,8 @@ public class AnimeClient {
       this.savePoint.setSeriesDuration(SavePoint.MyDuration.ZERO);
     }
   }
-  public synchronized void postSwitchSeries(){
+
+  public synchronized void postSwitchSeries() {
     log("postSwitchSeries");
     try {
       this.wait(500);

@@ -21,4 +21,5 @@ public interface AnimeInterface {
   void skipOpening();
   void skipEnding();
   boolean startWithTime(SavePoint.MyDuration seriesDuration);
+  boolean isLastEpisode();
 }

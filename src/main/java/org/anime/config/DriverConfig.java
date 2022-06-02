@@ -24,7 +24,10 @@ public class DriverConfig {
 
   @Bean
   public WebDriver chromeDriver(){
-    return new ChromeDriver(new ChromeOptions());
+    final ChromeOptions chromeOptions = new ChromeOptions();
+    // строчка, чтобы убрать мешающий банер
+    chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    return new ChromeDriver(chromeOptions);
   }
 
   @Bean

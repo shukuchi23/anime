@@ -40,8 +40,7 @@ public class SavePoint implements Comparable {
   public static boolean isNextSavePoint(SavePoint savePoint){
     return savePoint.titleName != null &&
         savePoint.seriesNum != 0 &&
-        savePoint.seriesDuration.equals(MyDuration.ZERO) &&
-        savePoint.getVideoUri() == null;
+        savePoint.seriesDuration.equals(MyDuration.ZERO);
   }
 
   public static class MyDuration implements Comparable<MyDuration> {
