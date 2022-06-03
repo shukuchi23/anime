@@ -24,22 +24,110 @@ public class AnimeClient {
   private SavePointRepository repository;
   private AnimeInterface animeInterface;
   private int secToAutosave;
-  private WebElement skipButton = null;
-  private boolean running;
   //  private SavePoint savePoint = null;
   private final Timer timer = new Timer(true);
   private AutoSaveTask task;
   private boolean firstTime;
   private boolean needSkipOpening;
 
+  public SavePointRepository getRepository() {
+    return repository;
+  }
+
+  public void setRepository(SavePointRepository repository) {
+    this.repository = repository;
+  }
+
+  public AnimeInterface getAnimeInterface() {
+    return animeInterface;
+  }
+
+  public void setAnimeInterface(AnimeInterface animeInterface) {
+    this.animeInterface = animeInterface;
+  }
+
+  public int getSecToAutosave() {
+    return secToAutosave;
+  }
+
+  public void setSecToAutosave(int secToAutosave) {
+    this.secToAutosave = secToAutosave;
+  }
+
+  public Timer getTimer() {
+    return timer;
+  }
+
+  public AutoSaveTask getTask() {
+    return task;
+  }
+
+  public void setTask(AutoSaveTask task) {
+    this.task = task;
+  }
+
+  public boolean isFirstTime() {
+    return firstTime;
+  }
+
+  public void setFirstTime(boolean firstTime) {
+    this.firstTime = firstTime;
+  }
+
+  public boolean isNeedSkipOpening() {
+    return needSkipOpening;
+  }
+
+  public void setNeedSkipOpening(boolean needSkipOpening) {
+    this.needSkipOpening = needSkipOpening;
+  }
+
+  public SavePoint getSavePoint() {
+    return savePoint;
+  }
+
+  public void setSavePoint(SavePoint savePoint) {
+    this.savePoint = savePoint;
+  }
+
+  public Supplier<WebElement> getWaitOpening() {
+    return waitOpening;
+  }
+
+  public void setWaitOpening(Supplier<WebElement> waitOpening) {
+    this.waitOpening = waitOpening;
+  }
+
+  public Supplier<WebElement> getWaitEnding() {
+    return waitEnding;
+  }
+
+  public void setWaitEnding(Supplier<WebElement> waitEnding) {
+    this.waitEnding = waitEnding;
+  }
+
+  public boolean isSeriesIsWatched() {
+    return seriesIsWatched;
+  }
+
+  public void setSeriesIsWatched(boolean seriesIsWatched) {
+    this.seriesIsWatched = seriesIsWatched;
+  }
+
+  public boolean isLastEpisode() {
+    return isLastEpisode;
+  }
+
+  public void setLastEpisode(boolean lastEpisode) {
+    isLastEpisode = lastEpisode;
+  }
+
   public void startAutoSave() {
-    running = true;
     task = new AutoSaveTask(savePoint);
     timer.scheduleAtFixedRate(task, 1000L, 1000L * secToAutosave);
   }
 
   public SavePoint stopAutoSave() {
-    running = false;
     SavePoint savePoint = task.getSavePoint();
     if (savePoint == null) {
       // произошло переключение

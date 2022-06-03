@@ -51,7 +51,17 @@ public class AnimeTest {
               new SavePoint.MyDuration(2, 0),
               null,
               "https://jut.su/samurai-champlo/episode-25.html"));
-      animeClient.watch(savePoint);
+//      animeClient.watch(savePoint);
+      SavePoint animeGoSp = savePointRepository
+          .findOne("Человек-дьявол: Плач")
+          .orElse(new SavePoint(
+              "Человек-дьявол: Плач",
+              6,
+              null,
+              "AniDub",
+              "https://animego.org/anime/chelovek-dyavol-plach-1301"
+          ));
+      animeClient.watch(animeGoSp);
     } catch (IOException e) {
       e.printStackTrace();
     }

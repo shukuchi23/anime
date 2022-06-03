@@ -14,6 +14,7 @@ public interface AnimeInterface {
   List<WebElement> getQualityContainer();
   WebElement getFullScreenButton();
   WebElement getPlayButton();
+  WebElement getTimeLineBar();
   Optional<WebElement> nextSeries();
   SavePoint getInfoAboutSeries(@Nullable SavePoint oldSavePoint);
   WebElement getSkipOpeningButtonWhenVisible();
