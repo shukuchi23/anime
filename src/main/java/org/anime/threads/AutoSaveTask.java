@@ -13,7 +13,8 @@ public class AutoSaveTask<T extends AbstractAnimeClient> extends TimerTask {
   private SavePoint savePoint;
   private T client;
 
-  public AutoSaveTask(SavePoint loadSavePoint) {
+  public AutoSaveTask(T client, SavePoint loadSavePoint) {
+    this.client = client;
     savePoint = loadSavePoint;
   }
 
