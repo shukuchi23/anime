@@ -1,29 +1,38 @@
 package org.anime;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.anime.config.AppConfig;
 import org.anime.config.DriverConfig;
 import org.anime.config.FXMLLoaderFactory;
 import org.anime.config.JsonConfig;
+import org.anime.controller.ExplorerController;
+import org.anime.fxcomponent.FxSavePoint;
+import org.anime.service.FxSavePointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 @Lazy
 @SpringBootApplication
 @ConfigurationPropertiesScan(basePackageClasses = {AppConfig.class, DriverConfig.class, JsonConfig.class, FXMLLoaderFactory.class})
+@Profile("prod")
 public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
-//  @Autowired
-//  private Scene explorerScene;
-//  @Autowired
+  @Autowired
+  private Scene explorerScene;
+  @Autowired
   private Scene creatorScene;
 //
-//  @Autowired
-//  private ExplorerController controller;
+  @Autowired
+  private ExplorerController controller;
 
 
   // VM option
@@ -63,13 +72,19 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   }
 
-//  @Autowired
-  /*@PostConstruct
+  @Autowired
+  @PostConstruct
   private void init(FxSavePointService service){
-    List<FxSavePoint> fxSavePoints = service.savePoints();
+    List<FxSavePoint> fxSavePoints = null;
+    try {
+      fxSavePoints = service.savePoints();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     VBox root = (VBox) explorerScene.getRoot();
     root.getChildren().addAll(fxSavePoints);
-  }*/
+  }
+
   public static void main(String[] args) {
     launchApp(HelloApplication.class, args);
   }

@@ -5,11 +5,13 @@ import javafx.scene.Scene;
 import org.anime.HelloApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 @Configuration
+@Profile("prod")
 public class FXMLLoaderFactory {
     public static final String FXML_EXPLORER_STAGE = "saveStage";
     public static final String FXML_CREATOR_STAGE = "hello-view";
@@ -20,7 +22,7 @@ public class FXMLLoaderFactory {
         return HelloApplication.class.getResourceAsStream("/fxml/" + sceneName);
     }
 
-//    @Bean
+    @Bean
     public Scene explorerScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_EXPLORER_STAGE)){
@@ -28,7 +30,7 @@ public class FXMLLoaderFactory {
         }
     }
 
-//    @Bean
+    @Bean
     public Scene creatorScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_CREATOR_STAGE)){

@@ -4,8 +4,7 @@ import org.anime.config.DriverConfig;
 import org.anime.model.SavePoint;
 import org.anime.repository.JsonSavePointRepository;
 import org.anime.repository.SavePointRepository;
-import org.anime.web.AnimeClient;
-import org.anime.web.AnimeInterface;
+import org.anime.web.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -13,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
-import org.anime.web.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,27 +19,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 
-@SpringBootTest
+@SpringBootTest(classes = AnimeClient.class)
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 public class AnimeTest {
-  @Autowired
+
+  @Autowired(required = true)
   private AnimeInterface jutsuPlayer;
   @Autowired
   private JsonSavePointRepository savePointRepository;
 
   private AnimeClient animeClient;
 
+  @Test
+  public void oneSeriesWatchWithCookie(){
 
+  }
 
   @Test
   public void oneSeriesWatch(){
     animeClient = new AnimeClient(savePointRepository, jutsuPlayer, 20);
-   /* SavePoint testSp = new SavePoint("Самурай Чамплу",
-        25,
-        new SavePoint.MyDuration(2,0),
-        null,
-        "https://jut.su/samurai-champlo/episode-25.html");*/
     try {
       final SavePoint savePoint = savePointRepository
           .findOne("Самурай Чамплу")

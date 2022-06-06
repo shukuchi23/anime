@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
@@ -20,8 +22,17 @@ import java.util.Optional;
  */
 
 @Component
-public class JutsuPlayer implements JutsuInterface {
-  private final WebClient client;
+@Profile({"prod, test"})
+public class JutsuPlayer implements JutsuInterface, AnimeInterface {
+  private WebClient client;
+
+  public void setClient(WebClient client) {
+    this.client = client;
+  }
+
+  public JutsuPlayer(){
+
+  }
 
   public JutsuPlayer(WebClient client) {
     this.client = client;
@@ -34,7 +45,6 @@ public class JutsuPlayer implements JutsuInterface {
 
   @Override
   public List<WebElement> getQualityContainer() {
-//    "button.vjs-menu-button.vjs-menu-button-popup.vjs-button[title='Выбрать качество']"
     client.waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
         "button.vjs-menu-button.vjs-menu-button-popup.vjs-button[title='Выбрать качество']"))).click();
     return client.webDriver.findElements(JutsuInterface.QUALITY_CONTAINER_SELECTOR);
@@ -46,6 +56,11 @@ public class JutsuPlayer implements JutsuInterface {
   }
 
   @Override
+  public WebElement getTimeLineBar() {
+    return null;
+  }
+
+  @Override
   public Optional<WebElement> nextSeries() {
     return Optional.ofNullable(client.webDriver.findElement(JutsuInterface.EXIST_NEXT_SERIES_SELECTOR));
   }
@@ -53,7 +68,6 @@ public class JutsuPlayer implements JutsuInterface {
   @Override
   public WebElement getFullScreenButton() {
     return client.waiter.until(ExpectedConditions.elementToBeClickable(FULLSCREEN_BUTTON_SELECTOR));
-//    return client.webDriver.findElement(FULLSCREEN_BUTTON_SELECTOR);
   }
 
   @Override
@@ -69,8 +83,6 @@ public class JutsuPlayer implements JutsuInterface {
   public boolean isLastEpisode() {
     return !client.existObject(JutsuInterface.EXIST_NEXT_SERIES_SELECTOR);
   }
-
-
 
   private boolean findStartTime(SavePoint.MyDuration target, Actions actions, WebElement progressBar){
     final int width = progressBar.getSize().getWidth();

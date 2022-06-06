@@ -1,5 +1,6 @@
 package org.anime.config;
 
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,16 +20,24 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:drivers.properties")
 public class DriverConfig {
+
   @Autowired
   private Environment environment;
 
   @Bean
   public WebDriver chromeDriver(){
-    final ChromeOptions chromeOptions = new ChromeOptions();
     // строчка, чтобы убрать мешающий банер
-    chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-    return new ChromeDriver(chromeOptions);
+    return new ChromeDriver(chromeOption());
   }
+
+  @Bean
+  public MutableCapabilities chromeOption(){
+    final ChromeOptions chromeOptions = new ChromeOptions();
+    chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+    return chromeOptions;
+  }
+
+
 
   @Bean
   public WebDriver firefoxDriver(){

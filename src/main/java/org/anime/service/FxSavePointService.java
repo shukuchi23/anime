@@ -4,7 +4,9 @@ import org.anime.fxcomponent.FxComponentFactory;
 import org.anime.fxcomponent.FxSavePoint;
 import org.anime.repository.SavePointRepository;
 import org.anime.utils.IconProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
  * @author Karimov Evgeniy
  * 26.04.2022
  */
-//@Component
+@Component
 public class FxSavePointService {
   /* Класс предоставляющий функционал над объектами класса FxSavePoint.
   * Примерный функционал:
@@ -26,7 +28,7 @@ public class FxSavePointService {
   * */
   private final SavePointRepository repository;
 
-//  @Autowired
+  @Autowired
   public FxSavePointService(SavePointRepository repository) {
     this.repository = repository;
   }
