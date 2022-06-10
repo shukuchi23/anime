@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
@@ -25,21 +26,29 @@ public class DriverConfig {
   private Environment environment;
 
   @Bean
+  @Lazy
   public WebDriver chromeDriver(){
     // строчка, чтобы убрать мешающий банер
     return new ChromeDriver(chromeOption());
   }
 
   @Bean
+
   public MutableCapabilities chromeOption(){
     final ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
     return chromeOptions;
   }
 
+  @Bean
+  public MutableCapabilities firefoxOption(){
+    return new FirefoxOptions();
+  }
+
 
 
   @Bean
+  @Lazy
   public WebDriver firefoxDriver(){
     return new FirefoxDriver(new FirefoxOptions());
   }

@@ -1,5 +1,6 @@
 package org.anime.web.cookie;
 
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.html5.LocalStorage;
 
 /**
@@ -30,6 +31,11 @@ public class AnimeGoCookieBuilder extends StorageEntityBuilder<LocalStorage> {
   @Override
   protected String getCookieFormat() {
     return COOKIE_FORMAT;
+  }
+
+  @Override
+  public Cookie build() {
+    return null;
   }
 
   @Override

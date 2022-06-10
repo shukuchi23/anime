@@ -6,16 +6,24 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import org.anime.fxcomponent.FxSavePoint;
+import org.anime.service.FxSavePointService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-@Controller
+@Controller("explorerController")
+@Profile({"prod", "test"})
 public class ExplorerController {
 
-   /* @Autowired
-    private FxSavePointService savePointService;*/
+    @Autowired
+    private FxSavePointService fxSavePointService;
 
     @FXML
     private MenuItem AboutMenuItem;
@@ -47,21 +55,21 @@ public class ExplorerController {
     @FXML
     private List<FxSavePoint> savePoints;
 //
-//    @FXML
-//    public void initialize() {
-//
-//    }
+    /*@FXML
+    public void initialize() {
+
+    }
 
     @PostConstruct
-    public void init() {
-        /*try {
-            List<FxSavePoint> fxSavePoints = savePointService.savePoints();
+    public void init() throws IOException {
+        try {
+            List<FxSavePoint> fxSavePoints = fxSavePointService.savePoints();
             savePoints.addAll(fxSavePoints);
         } catch (NoSuchElementException e){
             System.out.println("no save points");
-        }*/
-//        explorerVBox.getChildren().addAll(savePoints);
-    }
+        }
+        explorerVBox.getChildren().addAll(savePoints);
+    }*/
     @FXML
     void ExportSavePointsInFile(ActionEvent event) {
 

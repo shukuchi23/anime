@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @author Karimov Evgeniy
  * 26.04.2022
  */
-@Component
+@Component("fxSavePointService")
 public class FxSavePointService {
   /* Класс предоставляющий функционал над объектами класса FxSavePoint.
   * Примерный функционал:

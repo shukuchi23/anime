@@ -7,6 +7,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import static org.openqa.selenium.remote.BrowserType.CHROME;
+import static org.openqa.selenium.remote.BrowserType.FIREFOX;
+
 @Component
 @Lazy
 public class WebClient implements AutoCloseable {
@@ -23,9 +26,10 @@ public class WebClient implements AutoCloseable {
     return webDriver.getCurrentUrl();
   }
 
+
   public WebClient(MutableCapabilities option) {
     DriverConfig driverConfig = new DriverConfig();
-    switch (option.getBrowserType()) {
+    switch (option.getBrowserName()) {
       case CHROME:
         webDriver = driverConfig.chromeDriver();
         break;
@@ -34,7 +38,7 @@ public class WebClient implements AutoCloseable {
         break;
       default:
         throw new NotFoundException("На данный момент приложение поддерживает только firefox, opera, chrome." +
-            "\nДрайвер " + option.getBrowserType().getBrowserName() + "не найден");
+            "\nДрайвер " + option.getBrowserName() + "не найден");
     }
     waiter = new WebDriverWait(this.webDriver, 60 * 25);
   }

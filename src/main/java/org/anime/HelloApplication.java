@@ -11,6 +11,7 @@ import org.anime.controller.ExplorerController;
 import org.anime.fxcomponent.FxSavePoint;
 import org.anime.service.FxSavePointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Lazy;
@@ -26,21 +27,65 @@ import java.util.List;
 @Profile("prod")
 public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
-  @Autowired
-  private Scene explorerScene;
-  @Autowired
-  private Scene creatorScene;
 //
   @Autowired
-  private ExplorerController controller;
+//  @Qualifier("explorerScene")
+  private Scene explorerScene;
+
+  @Autowired
+  private FXMLLoaderFactory factory;
+
+ /* @Autowired
+  @Qualifier("creatorScene")*/
+  private Scene creatorScene;
+  //
+ /* @Autowired
+  @Qualifier("explorerController")*/
+  private ExplorerController explorerController;
+
+  public Scene getExplorerScene() {
+    return explorerScene;
+  }
+
+  public FXMLLoaderFactory getFactory() {
+    return factory;
+  }
+
+  public void setFactory(FXMLLoaderFactory factory) {
+    this.factory = factory;
+  }
+
+  public Scene getCreatorScene() {
+    return creatorScene;
+  }
+
+  public ExplorerController getExplorerController() {
+    return explorerController;
+  }
+
+  public HelloApplication() {
+  }
 
 
-  // VM option
+  public void setExplorerScene(Scene explorerScene) {
+    this.explorerScene = explorerScene;
+  }
+
+  public void setCreatorScene(Scene creatorScene) {
+    this.creatorScene = creatorScene;
+  }
+
+  public void setExplorerController(ExplorerController explorerController) {
+    this.explorerController = explorerController;
+  }
+// VM option
   // --module-path "path_to_javaFx/lib" --add-modules javafx.controls,javafx.fxml
 
 
   @Override
   public void start(Stage stage) throws IOException {
+    explorerScene =  factory.explorerScene();
+    creatorScene = factory.creatorScene();
     /*final ObjectMapper objectMapper = new ObjectMapper();
     SavePoint narutoSavePoint = new SavePoint(
         "Naruto",
@@ -61,23 +106,22 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 //    stage.setScene(stageFactory.getSceneByFxmlName(FxStageFactory.FXML_EXPLORER_STAGE));
 //    stage.show();
 
-    /*
+
     VBox root = (VBox) explorerScene.getRoot();
     long count = root.getChildren()
-            .stream()
-            .filter(n -> n instanceof FxSavePoint)
-            .count();
-    stage.setScene(count == 0 ? creatorScene : explorerScene);*/
+        .stream()
+        .filter(n -> n instanceof FxSavePoint)
+        .count();
+    stage.setScene(count == 0 ? creatorScene : explorerScene);
     stage.show();
 
   }
 
-  @Autowired
   @PostConstruct
-  private void init(FxSavePointService service){
+  void init( FxSavePointService fxSavePointService) {
     List<FxSavePoint> fxSavePoints = null;
     try {
-      fxSavePoints = service.savePoints();
+      fxSavePoints = fxSavePointService.savePoints();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -87,6 +131,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   public static void main(String[] args) {
     launchApp(HelloApplication.class, args);
+
   }
 
 }

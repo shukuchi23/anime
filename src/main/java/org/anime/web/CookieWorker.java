@@ -18,11 +18,11 @@ public class CookieWorker extends StorageWorker {
   }
 
   public LocalStorage getLocalStorage() {
-    return ((WebStorage) new Augmenter().augment(webDriver)).getLocalStorage();
+    return ((WebStorage) new Augmenter().augment(driver)).getLocalStorage();
   }
 
   public SessionStorage getSessionStorage() {
-    return ((WebStorage) new Augmenter().augment(webDriver)).getSessionStorage();
+    return ((WebStorage) new Augmenter().augment(driver)).getSessionStorage();
   }
 
   @Override

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +24,14 @@ import java.util.stream.StreamSupport;
  * 04.05.2022
  */
 @Repository
+
 public class JsonSavePointRepository implements SavePointRepository {
     private final File jsonSource;
     private final ObjectMapper mapper = new ObjectMapper();
     private ObjectNode root;
 
     public JsonSavePointRepository(File savePointJson) {
+        mapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss"));
         this.jsonSource = savePointJson;
         try {
             root = (ObjectNode) mapper.readTree(savePointJson);
@@ -70,7 +73,7 @@ public class JsonSavePointRepository implements SavePointRepository {
     }
 
     private ObjectNode createJsonStruct() throws IOException {
-        final ObjectNode objectNode = mapper.createObjectNode().put("last_update", new Date().toString());
+        final ObjectNode objectNode = mapper.createObjectNode().put("lastUpdate", new Date().toString());
         final ArrayNode arrayNode = mapper.createArrayNode();
         objectNode.put("data", arrayNode);
         mapper.writeValue(jsonSource, objectNode);
@@ -140,7 +143,7 @@ public class JsonSavePointRepository implements SavePointRepository {
 
 
     private void updateRoot() {
-        root.put("last_update", new Date().toString());
+        root.put("lastUpdate", new Date().toString());
     }
 
 }

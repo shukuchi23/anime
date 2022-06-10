@@ -1,27 +1,11 @@
 {
-  "last_update": "Tue May 17 09:34:54 MSK 2022",
+  "last_update": "17-05-2022 09:34:54",
   "data": [
     {
       "titleName": "Лучший ассасин, переродившийся аристократом",
-      "series_num": 10,
-      "series_duration": "00:00",
-      "source_uri": "https://jut.su/saikou-no-ansatsusha/episode-10.html"
-    },
-    {
-      "titleName": null,
-      "seriesNum": 0,
-      "seriesDuration": null,
-      "dubName": "AniDub",
-      "videoUri": null,
-      "updateTime": "Tue May 17 09:31:23 MSK 2022"
-    },
-    {
-      "titleName": null,
-      "seriesNum": 0,
-      "seriesDuration": null,
-      "dubName": "AniDub",
-      "videoUri": null,
-      "updateTime": "Tue May 17 09:33:45 MSK 2022"
+      "seriesNum": 10,
+      "seriesDuration": "00:00",
+      "videoUri": "https://jut.su/saikou-no-ansatsusha/episode-10.html"
     },
     {
       "titleName": "Самурай Чамплу",
@@ -29,7 +13,7 @@
       "seriesDuration": "02:37",
       "dubName": "AniDub",
       "videoUri": "https://jut.su/samurai-champlo/episode-25.html",
-      "updateTime": "Tue May 17 09:38:45 MSK 2022"
+      "updateTime": "17-05-2022 09:38:45"
     }
   ]
 }

@@ -23,18 +23,24 @@ public class FXMLLoaderFactory {
     }
 
     @Bean
-    public Scene explorerScene() throws IOException {
+    public Scene explorerScene()  {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_EXPLORER_STAGE)){
             return new Scene(fxmlLoader.load(stream));
+        } catch (IOException e){
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Bean
-    public Scene creatorScene() throws IOException {
+    public Scene creatorScene(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_CREATOR_STAGE)){
             return new Scene(fxmlLoader.load(stream));
+        }catch (IOException e){
+            e.printStackTrace();
         }
+        return null;
     }
 }

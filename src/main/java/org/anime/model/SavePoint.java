@@ -16,7 +16,7 @@ public class SavePoint implements Comparable {
   private MyDuration seriesDuration;
   private String dubName;
   private String videoUri; // https://jut.su/naruto...
-  @JsonSerialize(using = ToStringSerializer.class)
+//  @JsonSerialize(using = CustomDateFormat.class)
   private Date updateTime;
 
   public SavePoint() {
