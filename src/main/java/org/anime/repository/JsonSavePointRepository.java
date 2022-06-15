@@ -24,7 +24,6 @@ import java.util.stream.StreamSupport;
  * 04.05.2022
  */
 @Repository
-
 public class JsonSavePointRepository implements SavePointRepository {
     private final File jsonSource;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -140,8 +139,6 @@ public class JsonSavePointRepository implements SavePointRepository {
         }
         return -1;
     }
-
-
     private void updateRoot() {
         root.put("lastUpdate", new Date().toString());
     }

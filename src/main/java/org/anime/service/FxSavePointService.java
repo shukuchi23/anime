@@ -26,7 +26,7 @@ public class FxSavePointService {
   * *
   * *
   * */
-  private final SavePointRepository repository;
+  private SavePointRepository repository;
 
   @Autowired
   public FxSavePointService(SavePointRepository repository) {

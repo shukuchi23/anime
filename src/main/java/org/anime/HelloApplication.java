@@ -6,18 +6,14 @@ import javafx.stage.Stage;
 import org.anime.config.FXMLLoaderFactory;
 import org.anime.controller.ExplorerController;
 import org.anime.fxcomponent.FxSavePoint;
-import org.anime.service.FxSavePointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.List;
 
-@Lazy
 @SpringBootApplication
 @ConfigurationPropertiesScan( basePackages = {"org.anime.config"})
 @Profile("prod")
@@ -26,6 +22,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 //
   /*@Autowired
   @Qualifier("explorerScene")*/
+  @Autowired
   private Scene explorerScene;
 
   @Autowired
@@ -33,10 +30,12 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
  /* @Autowired
   @Qualifier("creatorScene")*/
+  @Autowired
   private Scene creatorScene;
   //
  /* @Autowired
   @Qualifier("explorerController")*/
+  @Autowired
   private ExplorerController explorerController;
 
   public Scene getExplorerScene() {
@@ -59,15 +58,16 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
     return explorerController;
   }
 
-  public HelloApplication() {
-  }
+  /*public HelloApplication() {
+  }*/
 
-
-  public void setExplorerScene(Scene explorerScene) {
+  @Autowired
+  public void setExplorerScene(@Qualifier("explorerScene") Scene explorerScene) {
     this.explorerScene = explorerScene;
   }
 
-  public void setCreatorScene(Scene creatorScene) {
+  @Autowired
+  public void setCreatorScene(@Qualifier("creatorScene") Scene creatorScene) {
     this.creatorScene = creatorScene;
   }
 
@@ -80,8 +80,8 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   @Override
   public void start(Stage stage) throws IOException {
-    explorerScene =  factory.explorerScene();
-    creatorScene = factory.creatorScene();
+    /*explorerScene =  factory.explorerScene();
+    creatorScene = factory.creatorScene();*/
     /*final ObjectMapper objectMapper = new ObjectMapper();
     SavePoint narutoSavePoint = new SavePoint(
         "Naruto",
@@ -111,18 +111,6 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
     stage.setScene(count == 0 ? creatorScene : explorerScene);
     stage.show();
 
-  }
-
-  @PostConstruct
-  void init( FxSavePointService fxSavePointService) {
-    List<FxSavePoint> fxSavePoints = null;
-    try {
-      fxSavePoints = fxSavePointService.savePoints();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    VBox root = (VBox) explorerScene.getRoot();
-    root.getChildren().addAll(fxSavePoints);
   }
 
   public static void main(String[] args) {

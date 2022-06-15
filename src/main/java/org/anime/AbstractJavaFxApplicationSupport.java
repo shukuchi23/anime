@@ -1,6 +1,7 @@
 package org.anime;
 
 import javafx.application.Application;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -17,7 +18,6 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
   public void init() throws Exception {
     context = SpringApplication.run(getClass(), savedArgs);
     context.getAutowireCapableBeanFactory().autowireBean(this);
-
   }
 
   @Override
