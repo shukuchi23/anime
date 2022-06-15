@@ -13,6 +13,6 @@ public class SavePointHelper {
   public static SavePoint tryToExtractSavePointFromUrl(String url){
     WebDriver driver = new HtmlUnitDriver(true);
     driver.get(url);
-
+    return null;
   }
 }

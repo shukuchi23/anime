@@ -1,17 +1,13 @@
 package org.anime;
 
-import org.anime.config.DriverConfig;
 import org.anime.model.SavePoint;
 import org.anime.repository.JsonSavePointRepository;
-import org.anime.repository.SavePointRepository;
-import org.anime.web.*;
+import org.anime.web.AnimeClient;
+import org.anime.web.AnimeInterface;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

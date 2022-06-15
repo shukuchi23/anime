@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Profile;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Configuration
 @Profile("prod")
+@Configuration("factory")
 public class FXMLLoaderFactory {
     public static final String FXML_EXPLORER_STAGE = "saveStage";
     public static final String FXML_CREATOR_STAGE = "hello-view";
@@ -22,7 +22,7 @@ public class FXMLLoaderFactory {
         return HelloApplication.class.getResourceAsStream("/fxml/" + sceneName);
     }
 
-    @Bean
+    @Bean("explorerScene")
     public Scene explorerScene()  {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_EXPLORER_STAGE)){
@@ -33,7 +33,7 @@ public class FXMLLoaderFactory {
         return null;
     }
 
-    @Bean
+    @Bean("creatorScene")
     public Scene creatorScene(){
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_CREATOR_STAGE)){

@@ -38,9 +38,9 @@ public class MainController1 {
   private void addTitle(){
     if (firstTimeGroup.isVisible()) {
       final String selectedBrowser = ((RadioButton)browsers.getSelectedToggle()).getText();
-      AppConfig.setProperties("myapp.default_browser", selectedBrowser.toLowerCase());
+     /* AppConfig.setProperties("myapp.default_browser", selectedBrowser.toLowerCase());
       AppConfig.setProperties("myapp.skip_opening", String.valueOf(skipOpening.isSelected()));
-      AppConfig.setProperties("myapp.skip_ending", String.valueOf(skipEnding.isSelected()));
+      AppConfig.setProperties("myapp.skip_ending", String.valueOf(skipEnding.isSelected()));*/
     }
 
     final String text = searchPanel.getEditor().getText();
