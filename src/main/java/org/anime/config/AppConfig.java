@@ -1,14 +1,14 @@
 package org.anime.config;
 
-import org.anime.model.MyOption;
+import org.anime.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -16,6 +16,7 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @Profile("prod")
 public class AppConfig {
+  private static final String PATH = "src/main/resources/application.properties";
   @Autowired
   private Environment environment;
 
@@ -39,12 +40,16 @@ public class AppConfig {
 
   protected static FileInputStream fileInputStream;
   protected static Properties properties;
+
   static {
-    try {
+    init();
+  }
+
+  private static void init() {
+    try  {
       fileInputStream = new FileInputStream("src/main/resources/application.properties");
       properties = new Properties();
       properties.load(fileInputStream);
-
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
@@ -62,4 +67,16 @@ public class AppConfig {
     return properties.getProperty(key);
   }
 
+  public static boolean putProperty(String key, String value) {
+    properties.setProperty(key, value);
+    try (FileOutputStream stream = new FileOutputStream(PATH)) {
+      StringUtils.log("AppConfig", "change properties");
+      properties.store(stream, null);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+    init();
+    return true;
+  }
 }

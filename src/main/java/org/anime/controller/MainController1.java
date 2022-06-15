@@ -5,11 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import org.anime.config.AppConfig;
+import org.anime.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-public class MainController1 {
+import java.util.Scanner;
 
+// CreationScene
+public class MainController1 {
   @FXML
   private Group firstTimeGroup;
 
@@ -28,6 +31,7 @@ public class MainController1 {
   @FXML
   private ComboBox<String> searchPanel;
 
+
   @FXML
   public void initialize(){
     final String property = AppConfig.getProperty("myapp.default_browser");
@@ -38,14 +42,17 @@ public class MainController1 {
   private void addTitle(){
     if (firstTimeGroup.isVisible()) {
       final String selectedBrowser = ((RadioButton)browsers.getSelectedToggle()).getText();
+      if (AppConfig.putProperty("myapp.default_browser", selectedBrowser))
+        StringUtils.log("записана инфа о браузере");
+
      /* AppConfig.setProperties("myapp.default_browser", selectedBrowser.toLowerCase());
       AppConfig.setProperties("myapp.skip_opening", String.valueOf(skipOpening.isSelected()));
       AppConfig.setProperties("myapp.skip_ending", String.valueOf(skipEnding.isSelected()));*/
     }
-
     final String text = searchPanel.getEditor().getText();
 
   }
+
 
   @FXML
   void clickStart(ActionEvent event) {

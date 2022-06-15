@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.anime.model.SavePoint;
+import org.anime.web.AnimeClient;
 
 /**
  * @author Karimov Evgeniy
@@ -25,16 +26,19 @@ public class FxSavePoint extends HBox{
 //    final Label seriesDuration = new Label(savePoint.getSeriesDuration().toString());
     getChildren().addAll(titleIcon, separator, new VBox(titleName, seriesNum));
     setOnMouseClicked(e -> {
-
       switch (e.getButton()){
         case PRIMARY:
           System.out.printf("[%s] Clicked Left\n", savePoint.getTitleName());
+          onClickSp();
           break;
         case SECONDARY:
           System.out.printf("[%s] Clicked Right\n", savePoint.getTitleName());
           break;
       }
     });
+  }
+
+  private void onClickSp(){
   }
 
   public ImageView getTitleIcon() {

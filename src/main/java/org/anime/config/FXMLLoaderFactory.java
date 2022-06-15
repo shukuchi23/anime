@@ -29,6 +29,15 @@ public class FXMLLoaderFactory {
             sceneName += ".fxml";
         return HelloApplication.class.getResourceAsStream("/fxml/" + sceneName);
     }
+    private URL getResourceByName(String sceneName){
+        if (sceneName.lastIndexOf(".fxml") == -1)
+            sceneName += ".fxml";
+        return HelloApplication.class.getResource("/fxml/" + sceneName);
+    }
+    public Object getController(Scene scene){
+        return null;
+//        FXMLLoader.load()
+    }
 
     @Bean("explorerScene")
     @Lazy

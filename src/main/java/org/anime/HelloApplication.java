@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import org.anime.config.FXMLLoaderFactory;
 import org.anime.controller.ExplorerController;
 import org.anime.fxcomponent.FxSavePoint;
+import org.anime.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -77,9 +78,11 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 // VM option
   // --module-path "path_to_javaFx/lib" --add-modules javafx.controls,javafx.fxml
 
+  private Stage stage;
 
   @Override
   public void start(Stage stage) throws IOException {
+    this.stage = stage;
     /*explorerScene =  factory.explorerScene();
     creatorScene = factory.creatorScene();*/
     /*final ObjectMapper objectMapper = new ObjectMapper();
@@ -110,9 +113,24 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
         .count();
     stage.setScene(count == 0 ? creatorScene : explorerScene);
     stage.show();
+  }
+
+  public Stage getStage(){
+    return stage;
+  }
+
+  public void showCreationScene(){
+    StringUtils.log("HelloApp", "need to set creation scene");
+    stage.setScene(creatorScene);
+    stage.showAndWait();
 
   }
 
+  public void showExplorerScene(){
+    StringUtils.log("HelloApp", "need to set explorer scene");
+    stage.setScene(explorerScene);
+    stage.show();
+  }
   public static void main(String[] args) {
     launchApp(HelloApplication.class, args);
 

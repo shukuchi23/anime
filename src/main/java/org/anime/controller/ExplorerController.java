@@ -1,44 +1,23 @@
 package org.anime.controller;
 
-import com.sun.javafx.fxml.FXMLLoaderHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import org.anime.HelloApplication;
 import org.anime.fxcomponent.FxSavePoint;
-import org.anime.repository.SavePointRepository;
-import org.anime.service.FxSavePointService;
-import org.anime.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.anime.utils.StringUtils.log;
 
 @Component
 @Profile({"prod", "test"})
 public class ExplorerController {
-    @Autowired
-    private SavePointRepository repository;
-   /* private FxSavePointService fxSavePointService;
 
-    public FxSavePointService getFxSavePointService() {
-        return fxSavePointService;
-    }
-
-    @Autowired
-    public void setFxSavePointService(FxSavePointService fxSavePointService) {
-        this.fxSavePointService = fxSavePointService;
-    }*/
 
     @FXML
     private MenuItem AboutMenuItem;
@@ -69,11 +48,18 @@ public class ExplorerController {
 
     @FXML
     private List<FxSavePoint> savePoints;
-    //
+
+
+    private HelloApplication application;
+
+    public void setApplication(HelloApplication application){
+        log("fxml", "set application");
+        this.application = application;
+    }
+
     @FXML
     void initialize() {
         log("fxml", "init start");
-        log("fxml", "repo " + (repository == null ? "is null" : "is init"));
        /* try {
             List<FxSavePoint> fxSavePoints = fxSavePointService.savePoints();
             savePoints.addAll(fxSavePoints);
@@ -83,15 +69,6 @@ public class ExplorerController {
         explorerVBox.getChildren().addAll(savePoints);*/
     }
 
-    @PostConstruct
-    public void init() throws IOException {
-        log("spring", "post consruct");
-        log("spring", "repo " + (repository == null ? "is null" : "is init"));
-        final FxSavePointService fxSavePointService = new FxSavePointService(repository);
-        final List<FxSavePoint> fxSavePoints = fxSavePointService.savePoints();
-        log("spring", "loaded savepoints");
-
-    }
     @FXML
     void ExportSavePointsInFile(ActionEvent event) {
 
