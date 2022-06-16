@@ -3,6 +3,7 @@ package org.anime;
 import javafx.application.Application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author Karimov Evgeniy
@@ -17,7 +18,6 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
   public void init() throws Exception {
     context = SpringApplication.run(getClass(), savedArgs);
     context.getAutowireCapableBeanFactory().autowireBean(this);
-
   }
 
   @Override

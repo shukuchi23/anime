@@ -15,14 +15,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 
-@SpringBootTest(classes = AnimeClient.class)
+/*@SpringBootTest(classes = AnimeClient.class)
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)*/
 public class AnimeTest {
 
-  @Autowired(required = true)
+//  @Autowired(required = true)
   private AnimeInterface jutsuPlayer;
-  @Autowired
+//  @Autowired
   private JsonSavePointRepository savePointRepository;
 
   private AnimeClient animeClient;

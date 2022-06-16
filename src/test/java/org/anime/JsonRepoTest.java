@@ -24,14 +24,14 @@ import java.util.Optional;
  * @author Karimov Evgeniy
  * 04.05.2022
  */
-@SpringBootTest
+/*@SpringBootTest
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)*/
 public class JsonRepoTest {
-    @Autowired
+//    @Autowired
     private File savePointJson;
 
-    @Autowired
+//    @Autowired
     private SavePointRepository savePointRepository;
 
     @Before

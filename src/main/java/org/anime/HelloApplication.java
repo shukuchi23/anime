@@ -6,33 +6,22 @@ import javafx.stage.Stage;
 import org.anime.config.FXMLLoaderFactory;
 import org.anime.controller.ExplorerController;
 import org.anime.fxcomponent.FxSavePoint;
-import org.anime.service.FxSavePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Profile;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.List;
 
-@Lazy
-@SpringBootApplication
-@ConfigurationPropertiesScan( basePackages = {"org.anime.config"})
-@Profile("prod")
+@SpringBootApplication(scanBasePackages = {"org.anime.*"})
 public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
 //
-  /*@Autowired
-  @Qualifier("explorerScene")*/
+  @Autowired
   private Scene explorerScene;
 
   @Autowired
   private FXMLLoaderFactory factory;
 
- /* @Autowired
-  @Qualifier("creatorScene")*/
+  @Autowired
   private Scene creatorScene;
   //
  /* @Autowired
@@ -43,13 +32,13 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
     return explorerScene;
   }
 
-  public FXMLLoaderFactory getFactory() {
+ /* public FXMLLoaderFactory getFactory() {
     return factory;
   }
 
   public void setFactory(FXMLLoaderFactory factory) {
     this.factory = factory;
-  }
+  }*/
 
   public Scene getCreatorScene() {
     return creatorScene;
@@ -80,8 +69,8 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   @Override
   public void start(Stage stage) throws IOException {
-    explorerScene =  factory.explorerScene();
-    creatorScene = factory.creatorScene();
+    /*explorerScene =  factory.explorerScene();
+    creatorScene = factory.creatorScene();*/
     /*final ObjectMapper objectMapper = new ObjectMapper();
     SavePoint narutoSavePoint = new SavePoint(
         "Naruto",
@@ -113,7 +102,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
 
   }
 
-  @PostConstruct
+  /*@PostConstruct
   void init( FxSavePointService fxSavePointService) {
     List<FxSavePoint> fxSavePoints = null;
     try {
@@ -123,7 +112,7 @@ public class HelloApplication extends AbstractJavaFxApplicationSupport {
     }
     VBox root = (VBox) explorerScene.getRoot();
     root.getChildren().addAll(fxSavePoints);
-  }
+  }*/
 
   public static void main(String[] args) {
     launchApp(HelloApplication.class, args);

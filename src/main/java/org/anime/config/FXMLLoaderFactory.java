@@ -2,19 +2,23 @@ package org.anime.config;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import org.anime.HelloApplication;
+import org.anime.service.FxSavePointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-@Profile("prod")
 @Configuration("factory")
 public class FXMLLoaderFactory {
     public static final String FXML_EXPLORER_STAGE = "saveStage";
     public static final String FXML_CREATOR_STAGE = "hello-view";
+
+    @Autowired
+    public FxSavePointService fxSavePointService;
 
     private InputStream getSceneByName(String sceneName) {
         if (sceneName.lastIndexOf(".fxml") == -1)
@@ -26,7 +30,10 @@ public class FXMLLoaderFactory {
     public Scene explorerScene()  {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try(InputStream stream = getSceneByName(FXML_EXPLORER_STAGE)){
-            return new Scene(fxmlLoader.load(stream));
+            Scene scene = new Scene(fxmlLoader.load(stream));
+            VBox root = (VBox) scene.getRoot();
+            root.getChildren().addAll(fxSavePointService.savePoints());
+            return scene;
         } catch (IOException e){
             e.printStackTrace();
         }
